@@ -1,0 +1,27 @@
+seed: 42
+
+model:
+  name: rsf_unet
+  in_channels: 3
+  out_channels: 1
+  base_channels: 24
+
+data:
+  name: stare
+  root: data/STARE
+  train_split: train
+  val_split: test
+  patch_size: [256, 256]
+  batch_size: 2
+  num_workers: 2
+  pin_memory: true
+
+optim:
+  lr: 0.0002
+
+train:
+  epochs: 1
+  output_dir: outputs
+
+eval:
+  threshold: 0.5

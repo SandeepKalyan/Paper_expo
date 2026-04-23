@@ -1,0 +1,30 @@
+seed: 42
+
+model:
+  name: rsf_unet
+  in_channels: 3
+  out_channels: 1
+  base_channels: 12
+
+data:
+  name: drive
+  root: data/DRIVE
+  train_split: train
+  val_split: test
+  patch_size: [256, 256]
+  samples_per_epoch: 16
+  vessel_sampling_prob: 0.7
+  batch_size: 2
+  num_workers: 0
+  pin_memory: false
+
+optim:
+  lr: 0.0002
+
+train:
+  epochs: 2
+  output_dir: outputs
+  loss: bce
+
+eval:
+  threshold: 0.5
