@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import json
+import time
 from pathlib import Path
 
 import numpy as np
@@ -25,13 +27,20 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def evaluate(model: nn.Module, loader, device: torch.device, threshold: float = 0.5) -> dict[str, float]:
+def evaluate(
+    model: nn.Module,
+    loader,
+    device: torch.device,
+    threshold: float = 0.5,
+    amp_dtype: torch.dtype | None = None,
+) -> dict[str, float]:
     model.eval()
     logits_all, target_all, fov_all = [], [], []
-    with torch.no_grad():
+    ctx = torch.autocast(device_type=device.type, dtype=amp_dtype) if amp_dtype is not None else _nullctx()
+    with torch.no_grad(), ctx:
         for batch in loader:
             images = batch["image"].to(device)
-            logits = model(images).cpu().numpy()[:, 0]
+            logits = model(images).float().cpu().numpy()[:, 0]
             logits_all.append(logits)
             target_all.append(batch["mask"].numpy()[:, 0])
             fov_all.append(batch["fov_mask"].numpy()[:, 0])
@@ -40,6 +49,14 @@ def evaluate(model: nn.Module, loader, device: torch.device, threshold: float = 
     target_np = np.concatenate(target_all, axis=0)
     fov_np = np.concatenate(fov_all, axis=0)
     return compute_metrics_from_logits(logits_np, target_np, fov_np, threshold=threshold)
+
+
+class _nullctx:
+    def __enter__(self):
+        return None
+
+    def __exit__(self, *a):
+        return False
 
 
 def main() -> None:
@@ -59,38 +76,81 @@ def main() -> None:
     epochs = int(cfg["train"].get("epochs", 200))
     threshold = float(cfg["eval"].get("threshold", 0.5))
 
+    precision = str(cfg["train"].get("precision", "fp32")).lower()
+    amp_dtype = None
+    if precision == "bf16":
+        amp_dtype = torch.bfloat16
+    elif precision == "fp16":
+        amp_dtype = torch.float16
+    use_amp = amp_dtype is not None and device.type == "cuda"
+    scaler = torch.amp.GradScaler("cuda", enabled=(precision == "fp16" and device.type == "cuda"))
+
     out_dir = ensure_dir(Path(cfg["train"].get("output_dir", "outputs")) / args.experiment)
     write_json(
         out_dir / "model_info.json",
-        {"trainable_params": count_parameters(model), "device": str(device), "loss": loss_name},
+        {
+            "trainable_params": count_parameters(model),
+            "device": str(device),
+            "loss": loss_name,
+            "precision": precision,
+            "epochs": epochs,
+            "experiment": args.experiment,
+            "config": cfg,
+        },
     )
+    metrics_jsonl = out_dir / "metrics.jsonl"
+    metrics_jsonl.write_text("", encoding="utf-8")
 
     best_auc = -1.0
     best_ckpt = out_dir / "best.pt"
+    last_ckpt = out_dir / "last.pt"
     history = []
 
     for epoch in range(1, epochs + 1):
         model.train()
         epoch_loss = 0.0
+        t0 = time.time()
         pbar = tqdm(train_loader, desc=f"Epoch {epoch}/{epochs}", leave=False)
         for batch in pbar:
-            images = batch["image"].to(device)
-            masks = batch["mask"].to(device)
-            logits = model(images)
-            loss = criterion(logits, masks)
+            images = batch["image"].to(device, non_blocking=True)
+            masks = batch["mask"].to(device, non_blocking=True)
             optimizer.zero_grad(set_to_none=True)
-            loss.backward()
-            optimizer.step()
+            if use_amp:
+                with torch.autocast(device_type=device.type, dtype=amp_dtype):
+                    logits = model(images)
+                    loss = criterion(logits, masks)
+                if scaler.is_enabled():
+                    scaler.scale(loss).backward()
+                    scaler.step(optimizer)
+                    scaler.update()
+                else:
+                    loss.backward()
+                    optimizer.step()
+            else:
+                logits = model(images)
+                loss = criterion(logits, masks)
+                loss.backward()
+                optimizer.step()
             epoch_loss += float(loss.item())
             pbar.set_postfix({"loss": f"{loss.item():.4f}"})
 
-        metrics = evaluate(model, val_loader, device=device, threshold=threshold)
+        train_sec = time.time() - t0
+        metrics = evaluate(model, val_loader, device=device, threshold=threshold, amp_dtype=amp_dtype)
         avg_loss = epoch_loss / max(len(train_loader), 1)
-        row = {"epoch": epoch, "train_loss": avg_loss, **metrics}
+        row = {
+            "epoch": epoch,
+            "train_loss": avg_loss,
+            "train_sec": round(train_sec, 2),
+            **metrics,
+        }
         history.append(row)
+        with metrics_jsonl.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(row) + "\n")
         print(
             f"[{epoch:03d}] loss={avg_loss:.4f} AUC={metrics['AUC']:.4f} "
-            f"F1={metrics['F1']:.4f} Se={metrics['Se']:.4f} Sp={metrics['Sp']:.4f}"
+            f"F1={metrics['F1']:.4f} Se={metrics['Se']:.4f} Sp={metrics['Sp']:.4f} "
+            f"t={train_sec:.1f}s",
+            flush=True,
         )
 
         if metrics["AUC"] > best_auc:
@@ -99,6 +159,10 @@ def main() -> None:
                 {"epoch": epoch, "model_state_dict": model.state_dict(), "config": cfg, "metrics": metrics},
                 best_ckpt,
             )
+        torch.save(
+            {"epoch": epoch, "model_state_dict": model.state_dict(), "config": cfg, "metrics": metrics},
+            last_ckpt,
+        )
 
     write_json(out_dir / "history.json", {"history": history, "best_auc": best_auc})
     print(f"Training complete. Best AUC: {best_auc:.4f}. Checkpoint: {best_ckpt}")
