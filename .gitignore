@@ -2,7 +2,7 @@
 __pycache__/
 *.pyc
 .DS_Store
-data/
-outputs/
+/data/
+/outputs/
 .claude/worktrees/
 .claude/settings.local.json

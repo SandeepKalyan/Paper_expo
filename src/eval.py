@@ -9,6 +9,7 @@ import torch
 from src.data.factory import build_dataloader
 from src.metrics.vessel_metrics import compute_metrics_from_probs
 from src.models.factory import build_model
+from src.patch_eval import predict_patches_overlap
 from src.utils.config import load_config
 
 
@@ -20,13 +21,21 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def _predict_probs(model: torch.nn.Module, images: torch.Tensor, tta: bool) -> np.ndarray:
+def _predict_probs(
+    model: torch.nn.Module,
+    images: torch.Tensor,
+    tta: bool,
+    patch_overlap: bool = False,
+    patch_size: int = 256,
+    stride: int = 128,
+) -> np.ndarray:
+    if patch_overlap:
+        probs = predict_patches_overlap(model, images, patch_size=patch_size, stride=stride, tta=tta)
+        return probs.cpu().numpy()[:, 0]
     logits = model(images)
     probs = torch.sigmoid(logits)
     if not tta:
         return probs.cpu().numpy()[:, 0]
-
-    # Simple TTA: horizontal and vertical flips.
     images_h = torch.flip(images, dims=[3])
     images_v = torch.flip(images, dims=[2])
     probs_h = torch.flip(torch.sigmoid(model(images_h)), dims=[3])
@@ -62,11 +71,21 @@ def main() -> None:
     probs_all, target_all, fov_all = [], [], []
     tta = bool(cfg["eval"].get("tta", False))
     postprocess = bool(cfg["eval"].get("postprocess", False))
+    patch_overlap = bool(cfg["eval"].get("patch_overlap", False))
+    patch_size = int(cfg["eval"].get("patch_size", 256))
+    stride = int(cfg["eval"].get("stride", 128))
 
     with torch.no_grad():
         for batch in loader:
             images = batch["image"].to(device)
-            probs = _predict_probs(model, images, tta=tta)
+            probs = _predict_probs(
+                model,
+                images,
+                tta=tta,
+                patch_overlap=patch_overlap,
+                patch_size=patch_size,
+                stride=stride,
+            )
             probs_all.append(probs)
             target_all.append(batch["mask"].numpy()[:, 0])
             fov_all.append(batch["fov_mask"].numpy()[:, 0])
