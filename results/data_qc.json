@@ -1,0 +1,2435 @@
+{
+  "datasets": [
+    {
+      "name": "DRIVE",
+      "n_samples": 40,
+      "n_issues": 0,
+      "intra_dups": [],
+      "per_sample": [
+        {
+          "sid": "img_000",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 77.12916111043764,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 28,
+            "fov_area": 224377,
+            "fov_frac": 0.680012728815614,
+            "vessel_frac_in_fov": 0.13108295413522777
+          }
+        },
+        {
+          "sid": "img_001",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 94.7059976966905,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 67,
+            "fov_area": 225087,
+            "fov_frac": 0.6821645047884592,
+            "vessel_frac_in_fov": 0.14982206880006396
+          }
+        },
+        {
+          "sid": "img_002",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 58.64265567543541,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 7,
+            "fov_area": 225727,
+            "fov_frac": 0.6841041338344042,
+            "vessel_frac_in_fov": 0.14568926180740452
+          }
+        },
+        {
+          "sid": "img_003",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 79.95740897886613,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 11,
+            "fov_area": 227577,
+            "fov_frac": 0.6897108740453388,
+            "vessel_frac_in_fov": 0.13333069686303975
+          }
+        },
+        {
+          "sid": "img_004",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 74.04137471208631,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 14,
+            "fov_area": 227693,
+            "fov_frac": 0.6900624318099163,
+            "vessel_frac_in_fov": 0.13570026307352445
+          }
+        },
+        {
+          "sid": "img_005",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 73.77838222814887,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 11,
+            "fov_area": 227499,
+            "fov_frac": 0.6894744817553643,
+            "vessel_frac_in_fov": 0.14112149943516236
+          }
+        },
+        {
+          "sid": "img_006",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 86.3054269204348,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 8,
+            "fov_area": 227675,
+            "fov_frac": 0.6900078797429992,
+            "vessel_frac_in_fov": 0.13239925332162072
+          }
+        },
+        {
+          "sid": "img_007",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 81.17183699034226,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 78,
+            "fov_area": 225248,
+            "fov_frac": 0.6826524427203298,
+            "vessel_frac_in_fov": 0.12568813041625232
+          }
+        },
+        {
+          "sid": "img_008",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 89.46970743928557,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 1,
+            "fov_area": 227660,
+            "fov_frac": 0.6899624196872348,
+            "vessel_frac_in_fov": 0.11745585522270052
+          }
+        },
+        {
+          "sid": "img_009",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 66.5467389986665,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 4,
+            "fov_area": 227332,
+            "fov_frac": 0.688968359801188,
+            "vessel_frac_in_fov": 0.11943765066070769
+          }
+        },
+        {
+          "sid": "img_010",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 92.17363821877399,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 6,
+            "fov_area": 227814,
+            "fov_frac": 0.6904291429264153,
+            "vessel_frac_in_fov": 0.12963645781207475
+          }
+        },
+        {
+          "sid": "img_011",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 84.10681395724734,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 227605,
+            "fov_frac": 0.689795732816099,
+            "vessel_frac_in_fov": 0.12517299707827156
+          }
+        },
+        {
+          "sid": "img_012",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 84.59766941447448,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 7,
+            "fov_area": 227500,
+            "fov_frac": 0.6894775124257486,
+            "vessel_frac_in_fov": 0.14176703296703297
+          }
+        },
+        {
+          "sid": "img_013",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 85.56087404533884,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 46,
+            "fov_area": 225854,
+            "fov_frac": 0.6844890289732088,
+            "vessel_frac_in_fov": 0.11791245671982785
+          }
+        },
+        {
+          "sid": "img_014",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 65.26034165757466,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 2,
+            "fov_area": 227394,
+            "fov_frac": 0.689156261365014,
+            "vessel_frac_in_fov": 0.10383739236743274
+          }
+        },
+        {
+          "sid": "img_015",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 88.53539216874773,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 227694,
+            "fov_frac": 0.6900654624803007,
+            "vessel_frac_in_fov": 0.13083787890765677
+          }
+        },
+        {
+          "sid": "img_016",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 94.03965834242534,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 1,
+            "fov_area": 225884,
+            "fov_frac": 0.6845799490847375,
+            "vessel_frac_in_fov": 0.12329779887021657
+          }
+        },
+        {
+          "sid": "img_017",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 91.42320281246212,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 227612,
+            "fov_frac": 0.689816947508789,
+            "vessel_frac_in_fov": 0.11486213380665343
+          }
+        },
+        {
+          "sid": "img_018",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 61.899319109386994,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 4,
+            "fov_area": 227388,
+            "fov_frac": 0.6891380773427082,
+            "vessel_frac_in_fov": 0.12035375657466534
+          }
+        },
+        {
+          "sid": "img_019",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 76.64280821917808,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 1,
+            "fov_area": 227523,
+            "fov_frac": 0.6895472178445872,
+            "vessel_frac_in_fov": 0.10664416344721193
+          }
+        },
+        {
+          "sid": "img_020",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 91.96454822806805,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 8,
+            "fov_area": 225600,
+            "fov_frac": 0.6837192386955995,
+            "vessel_frac_in_fov": 0.10926418439716312
+          }
+        },
+        {
+          "sid": "img_021",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 84.77319877156827,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 9,
+            "fov_area": 227686,
+            "fov_frac": 0.6900412171172263,
+            "vessel_frac_in_fov": 0.13088200416362886
+          }
+        },
+        {
+          "sid": "img_022",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 100.44695417626379,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 9,
+            "fov_area": 228187,
+            "fov_frac": 0.6915595829797552,
+            "vessel_frac_in_fov": 0.09515879519867478
+          }
+        },
+        {
+          "sid": "img_023",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 97.57369580151129,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 14,
+            "fov_area": 227726,
+            "fov_frac": 0.6901624439325978,
+            "vessel_frac_in_fov": 0.1678113171091575
+          }
+        },
+        {
+          "sid": "img_024",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 72.79259607225119,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 5,
+            "fov_area": 227362,
+            "fov_frac": 0.6890592799127166,
+            "vessel_frac_in_fov": 0.13926689596326564
+          }
+        },
+        {
+          "sid": "img_025",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 54.35043944720572,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 77,
+            "fov_area": 225092,
+            "fov_frac": 0.6821796581403806,
+            "vessel_frac_in_fov": 0.12215449682796367
+          }
+        },
+        {
+          "sid": "img_026",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 93.25639471451085,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 2,
+            "fov_area": 227826,
+            "fov_frac": 0.6904655109710268,
+            "vessel_frac_in_fov": 0.12760176626021613
+          }
+        },
+        {
+          "sid": "img_027",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 82.29506202772053,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 19,
+            "fov_area": 227327,
+            "fov_frac": 0.6889532064492666,
+            "vessel_frac_in_fov": 0.14168576543921313
+          }
+        },
+        {
+          "sid": "img_028",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 66.34698751363801,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 13,
+            "fov_area": 227309,
+            "fov_frac": 0.6888986543823494,
+            "vessel_frac_in_fov": 0.12202772437518972
+          }
+        },
+        {
+          "sid": "img_029",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 53.15189719966057,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 7,
+            "fov_area": 227259,
+            "fov_frac": 0.6887471208631349,
+            "vessel_frac_in_fov": 0.11386567748692021
+          }
+        },
+        {
+          "sid": "img_030",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 89.27845294379117,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 1,
+            "fov_area": 227701,
+            "fov_frac": 0.6900866771729907,
+            "vessel_frac_in_fov": 0.08738213710084716
+          }
+        },
+        {
+          "sid": "img_031",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 87.61360872024892,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 28,
+            "fov_area": 224944,
+            "fov_frac": 0.6817311189235059,
+            "vessel_frac_in_fov": 0.11983426986272139
+          }
+        },
+        {
+          "sid": "img_032",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 93.15279124742393,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 7,
+            "fov_area": 227738,
+            "fov_frac": 0.6901988119772093,
+            "vessel_frac_in_fov": 0.11714777507486673
+          }
+        },
+        {
+          "sid": "img_033",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 72.89958378793389,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 226542,
+            "fov_frac": 0.6865741301975997,
+            "vessel_frac_in_fov": 0.14252103362731855
+          }
+        },
+        {
+          "sid": "img_034",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 78.1958853598416,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 227646,
+            "fov_frac": 0.6899199903018548,
+            "vessel_frac_in_fov": 0.1256863727014751
+          }
+        },
+        {
+          "sid": "img_035",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 69.94235159817352,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 227217,
+            "fov_frac": 0.6886198327069948,
+            "vessel_frac_in_fov": 0.15792832402505094
+          }
+        },
+        {
+          "sid": "img_036",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 73.94256172465349,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 227186,
+            "fov_frac": 0.6885258819250818,
+            "vessel_frac_in_fov": 0.1269488436787478
+          }
+        },
+        {
+          "sid": "img_037",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 88.4756859417303,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 226224,
+            "fov_frac": 0.6856103770153958,
+            "vessel_frac_in_fov": 0.1258796590989462
+          }
+        },
+        {
+          "sid": "img_038",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 73.95128197357255,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 227460,
+            "fov_frac": 0.689356285610377,
+            "vessel_frac_in_fov": 0.12462850611096457
+          }
+        },
+        {
+          "sid": "img_039",
+          "ok": true,
+          "checks": {
+            "shape": [
+              584,
+              565
+            ],
+            "img_mean": 57.42337455045056,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 1,
+            "fov_area": 226974,
+            "fov_frac": 0.6878833798036126,
+            "vessel_frac_in_fov": 0.11014477429132852
+          }
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "STARE",
+      "n_samples": 20,
+      "n_issues": 0,
+      "intra_dups": [],
+      "per_sample": [
+        {
+          "sid": "img_000",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 72.88491696182605,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 407421,
+            "fov_frac": 0.9620330578512397,
+            "vessel_frac_in_fov": 0.08295841402382302
+          }
+        },
+        {
+          "sid": "img_001",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 72.0751940181031,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 407514,
+            "fov_frac": 0.9622526564344747,
+            "vessel_frac_in_fov": 0.06921234607890772
+          }
+        },
+        {
+          "sid": "img_002",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 88.61188665879575,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 409453,
+            "fov_frac": 0.9668311688311688,
+            "vessel_frac_in_fov": 0.06189965637081667
+          }
+        },
+        {
+          "sid": "img_003",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 77.25434395907124,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 404978,
+            "fov_frac": 0.9562644628099174,
+            "vessel_frac_in_fov": 0.07752272962975766
+          }
+        },
+        {
+          "sid": "img_004",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 102.02467847304212,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 409323,
+            "fov_frac": 0.9665242030696576,
+            "vessel_frac_in_fov": 0.09346408581975603
+          }
+        },
+        {
+          "sid": "img_005",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 123.71972294372294,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 415685,
+            "fov_frac": 0.9815466351829988,
+            "vessel_frac_in_fov": 0.07095757604917186
+          }
+        },
+        {
+          "sid": "img_006",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 94.10165918929555,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 402761,
+            "fov_frac": 0.9510295159386069,
+            "vessel_frac_in_fov": 0.08427082066039164
+          }
+        },
+        {
+          "sid": "img_007",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 80.28023770169224,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 403619,
+            "fov_frac": 0.9530554899645809,
+            "vessel_frac_in_fov": 0.07832882000104059
+          }
+        },
+        {
+          "sid": "img_008",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 87.86189374262102,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 404977,
+            "fov_frac": 0.9562621015348288,
+            "vessel_frac_in_fov": 0.08225158465789416
+          }
+        },
+        {
+          "sid": "img_009",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 72.343484454939,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 408911,
+            "fov_frac": 0.9655513577331759,
+            "vessel_frac_in_fov": 0.08328707224799528
+          }
+        },
+        {
+          "sid": "img_010",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 86.07675482093664,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 403990,
+            "fov_frac": 0.9539315230224321,
+            "vessel_frac_in_fov": 0.07470481942622342
+          }
+        },
+        {
+          "sid": "img_011",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 91.5877103502558,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 405097,
+            "fov_frac": 0.9565454545454546,
+            "vessel_frac_in_fov": 0.08084730323848362
+          }
+        },
+        {
+          "sid": "img_012",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 90.85561983471074,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 402911,
+            "fov_frac": 0.951383707201889,
+            "vessel_frac_in_fov": 0.09357153316737443
+          }
+        },
+        {
+          "sid": "img_013",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 90.0231955922865,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 402724,
+            "fov_frac": 0.9509421487603306,
+            "vessel_frac_in_fov": 0.0952513383855941
+          }
+        },
+        {
+          "sid": "img_014",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 103.41554978354978,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 406514,
+            "fov_frac": 0.9598913813459268,
+            "vessel_frac_in_fov": 0.0899624613174454
+          }
+        },
+        {
+          "sid": "img_015",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 71.38585832349469,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 397795,
+            "fov_frac": 0.9393034238488784,
+            "vessel_frac_in_fov": 0.10870674593697759
+          }
+        },
+        {
+          "sid": "img_016",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 77.10500669027942,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 404851,
+            "fov_frac": 0.9559645808736718,
+            "vessel_frac_in_fov": 0.09362209800642705
+          }
+        },
+        {
+          "sid": "img_017",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 87.98729083038174,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 405847,
+            "fov_frac": 0.9583164108618654,
+            "vessel_frac_in_fov": 0.052773582162736206
+          }
+        },
+        {
+          "sid": "img_018",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 94.11334828807556,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 403005,
+            "fov_frac": 0.9516056670602125,
+            "vessel_frac_in_fov": 0.045272391161399986
+          }
+        },
+        {
+          "sid": "img_019",
+          "ok": true,
+          "checks": {
+            "shape": [
+              605,
+              700
+            ],
+            "img_mean": 97.66362455726092,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 403293,
+            "fov_frac": 0.9522857142857143,
+            "vessel_frac_in_fov": 0.07007560260158248
+          }
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "CHASE_DB1",
+      "n_samples": 28,
+      "n_issues": 0,
+      "intra_dups": [],
+      "per_sample": [
+        {
+          "sid": "img_000",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 50.560214381047714,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 113,
+            "fov_area": 663868,
+            "fov_frac": 0.6922213880547214,
+            "vessel_frac_in_fov": 0.1005802358300144
+          }
+        },
+        {
+          "sid": "img_001",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 43.32758487654321,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 234,
+            "fov_area": 662260,
+            "fov_frac": 0.6905447113780447,
+            "vessel_frac_in_fov": 0.10963065865370096
+          }
+        },
+        {
+          "sid": "img_002",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 57.67407511678345,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 165,
+            "fov_area": 664755,
+            "fov_frac": 0.6931462712712713,
+            "vessel_frac_in_fov": 0.11681747410700183
+          }
+        },
+        {
+          "sid": "img_003",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 44.66300397619842,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 339,
+            "fov_area": 661771,
+            "fov_frac": 0.6900348264931598,
+            "vessel_frac_in_fov": 0.11265377298189252
+          }
+        },
+        {
+          "sid": "img_004",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 54.046480508286066,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 111,
+            "fov_area": 664002,
+            "fov_frac": 0.6923611111111111,
+            "vessel_frac_in_fov": 0.11307947867626905
+          }
+        },
+        {
+          "sid": "img_005",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 51.829774218663104,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 219,
+            "fov_area": 662812,
+            "fov_frac": 0.6911202869536203,
+            "vessel_frac_in_fov": 0.10893284973718037
+          }
+        },
+        {
+          "sid": "img_006",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 51.97648968412857,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 90,
+            "fov_area": 662224,
+            "fov_frac": 0.6905071738405072,
+            "vessel_frac_in_fov": 0.11337251443620286
+          }
+        },
+        {
+          "sid": "img_007",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 55.48814369925481,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 287,
+            "fov_area": 664699,
+            "fov_frac": 0.6930878795462129,
+            "vessel_frac_in_fov": 0.11063203043783727
+          }
+        },
+        {
+          "sid": "img_008",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 67.90778973417862,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 310,
+            "fov_area": 665456,
+            "fov_frac": 0.6938772105438772,
+            "vessel_frac_in_fov": 0.11365289365487725
+          }
+        },
+        {
+          "sid": "img_009",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 65.33367117117118,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 174,
+            "fov_area": 665288,
+            "fov_frac": 0.693702035368702,
+            "vessel_frac_in_fov": 0.12248680270800015
+          }
+        },
+        {
+          "sid": "img_010",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 47.20914803692582,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 412,
+            "fov_area": 662038,
+            "fov_frac": 0.6903132298965632,
+            "vessel_frac_in_fov": 0.10909343572423336
+          }
+        },
+        {
+          "sid": "img_011",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 43.16149726115004,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 312,
+            "fov_area": 662798,
+            "fov_frac": 0.6911056890223557,
+            "vessel_frac_in_fov": 0.1078096192203356
+          }
+        },
+        {
+          "sid": "img_012",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 59.104254601824046,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 204,
+            "fov_area": 665016,
+            "fov_frac": 0.6934184184184184,
+            "vessel_frac_in_fov": 0.11201986117627245
+          }
+        },
+        {
+          "sid": "img_013",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 57.281129740851966,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 162,
+            "fov_area": 665849,
+            "fov_frac": 0.694286995328662,
+            "vessel_frac_in_fov": 0.10934310932358537
+          }
+        },
+        {
+          "sid": "img_014",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 42.55147925703481,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 114,
+            "fov_area": 625048,
+            "fov_frac": 0.6517434100767434,
+            "vessel_frac_in_fov": 0.09905159283767007
+          }
+        },
+        {
+          "sid": "img_015",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 37.35875389278167,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 33,
+            "fov_area": 626111,
+            "fov_frac": 0.6528518101434768,
+            "vessel_frac_in_fov": 0.09727029232835711
+          }
+        },
+        {
+          "sid": "img_016",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 73.9077862584807,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 40,
+            "fov_area": 664460,
+            "fov_frac": 0.6928386720053387,
+            "vessel_frac_in_fov": 0.07296752249947326
+          }
+        },
+        {
+          "sid": "img_017",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 74.48305944833723,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 146,
+            "fov_area": 664073,
+            "fov_frac": 0.6924351434768101,
+            "vessel_frac_in_fov": 0.07329465284690087
+          }
+        },
+        {
+          "sid": "img_018",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 51.260224460571685,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 16,
+            "fov_area": 663290,
+            "fov_frac": 0.6916187020353687,
+            "vessel_frac_in_fov": 0.09054862880489681
+          }
+        },
+        {
+          "sid": "img_019",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 43.173407435212994,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 22,
+            "fov_area": 662291,
+            "fov_frac": 0.6905770353687021,
+            "vessel_frac_in_fov": 0.08961166617091279
+          }
+        },
+        {
+          "sid": "img_020",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 80.26025991269047,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 1,
+            "fov_area": 666919,
+            "fov_frac": 0.6954026943610276,
+            "vessel_frac_in_fov": 0.07664798873626333
+          }
+        },
+        {
+          "sid": "img_021",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 77.67308037203871,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 11,
+            "fov_area": 665599,
+            "fov_frac": 0.6940263179846513,
+            "vessel_frac_in_fov": 0.07680600481671397
+          }
+        },
+        {
+          "sid": "img_022",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 52.010912996329665,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 46,
+            "fov_area": 661465,
+            "fov_frac": 0.6897157574240907,
+            "vessel_frac_in_fov": 0.10429274413612209
+          }
+        },
+        {
+          "sid": "img_023",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 57.846569486152816,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 9,
+            "fov_area": 663924,
+            "fov_frac": 0.6922797797797797,
+            "vessel_frac_in_fov": 0.10615974117519475
+          }
+        },
+        {
+          "sid": "img_024",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 42.12160389556223,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 70,
+            "fov_area": 661158,
+            "fov_frac": 0.6893956456456456,
+            "vessel_frac_in_fov": 0.08910729356674199
+          }
+        },
+        {
+          "sid": "img_025",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 37.546913580246915,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 5,
+            "fov_area": 660982,
+            "fov_frac": 0.6892121287954621,
+            "vessel_frac_in_fov": 0.09171202846673586
+          }
+        },
+        {
+          "sid": "img_026",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 69.69259050717385,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 1,
+            "fov_area": 665713,
+            "fov_frac": 0.6941451868535202,
+            "vessel_frac_in_fov": 0.09915984816279688
+          }
+        },
+        {
+          "sid": "img_027",
+          "ok": true,
+          "checks": {
+            "shape": [
+              960,
+              999
+            ],
+            "img_mean": 44.933763624735846,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 661190,
+            "fov_frac": 0.689429012345679,
+            "vessel_frac_in_fov": 0.08486063007607496
+          }
+        }
+      ],
+      "issues": []
+    },
+    {
+      "name": "HRF",
+      "n_samples": 45,
+      "n_issues": 0,
+      "intra_dups": [],
+      "per_sample": [
+        {
+          "sid": "img_000",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 83.45443351759764,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 365,
+            "fov_area": 6912991,
+            "fov_frac": 0.8445571743838743,
+            "vessel_frac_in_fov": 0.06016455106045994
+          }
+        },
+        {
+          "sid": "img_001",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 78.33306688148964,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 268,
+            "fov_area": 6914403,
+            "fov_frac": 0.8447296778241696,
+            "vessel_frac_in_fov": 0.07916287205128195
+          }
+        },
+        {
+          "sid": "img_002",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 86.14305788492213,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 6913783,
+            "fov_frac": 0.8446539326874961,
+            "vessel_frac_in_fov": 0.12061240568296691
+          }
+        },
+        {
+          "sid": "img_003",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 78.40568435486645,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 480,
+            "fov_area": 6915024,
+            "fov_frac": 0.8448055451304185,
+            "vessel_frac_in_fov": 0.0754007505975395
+          }
+        },
+        {
+          "sid": "img_004",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 76.57692399162862,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 189,
+            "fov_area": 6915730,
+            "fov_frac": 0.844891796850566,
+            "vessel_frac_in_fov": 0.08813718869880692
+          }
+        },
+        {
+          "sid": "img_005",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 87.2796472980651,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 16,
+            "fov_area": 6914369,
+            "fov_frac": 0.8447255240586101,
+            "vessel_frac_in_fov": 0.11691912884603063
+          }
+        },
+        {
+          "sid": "img_006",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 94.50201571654574,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 85,
+            "fov_area": 6915830,
+            "fov_frac": 0.8449040138080941,
+            "vessel_frac_in_fov": 0.07147587491306177
+          }
+        },
+        {
+          "sid": "img_007",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 81.85750743442588,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 107,
+            "fov_area": 6914352,
+            "fov_frac": 0.8447234471758304,
+            "vessel_frac_in_fov": 0.0683546339555753
+          }
+        },
+        {
+          "sid": "img_008",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 76.94280444006588,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 45,
+            "fov_area": 6912072,
+            "fov_frac": 0.8444449005441922,
+            "vessel_frac_in_fov": 0.12501692690701138
+          }
+        },
+        {
+          "sid": "img_009",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 72.18524633784482,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 204,
+            "fov_area": 6913398,
+            "fov_frac": 0.8446068974010134,
+            "vessel_frac_in_fov": 0.06682314543441589
+          }
+        },
+        {
+          "sid": "img_010",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 83.2720655763928,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 95,
+            "fov_area": 6912845,
+            "fov_frac": 0.8445393376258835,
+            "vessel_frac_in_fov": 0.0762089993338488
+          }
+        },
+        {
+          "sid": "img_011",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 79.41005134705803,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 6,
+            "fov_area": 6913012,
+            "fov_frac": 0.8445597399449553,
+            "vessel_frac_in_fov": 0.11161487930297243
+          }
+        },
+        {
+          "sid": "img_012",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 79.59862411809856,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 94,
+            "fov_area": 6912374,
+            "fov_frac": 0.8444817957559267,
+            "vessel_frac_in_fov": 0.07361928043824018
+          }
+        },
+        {
+          "sid": "img_013",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 72.61689567760784,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 102,
+            "fov_area": 6913655,
+            "fov_frac": 0.8446382949818603,
+            "vessel_frac_in_fov": 0.07737571516079411
+          }
+        },
+        {
+          "sid": "img_014",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 76.80130617194179,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 5,
+            "fov_area": 6912106,
+            "fov_frac": 0.8444490543097517,
+            "vessel_frac_in_fov": 0.10688218612388178
+          }
+        },
+        {
+          "sid": "img_015",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 80.56478131320239,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 122,
+            "fov_area": 6914251,
+            "fov_frac": 0.8447111080487271,
+            "vessel_frac_in_fov": 0.08935805194228558
+          }
+        },
+        {
+          "sid": "img_016",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 76.48410447583714,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 210,
+            "fov_area": 6912795,
+            "fov_frac": 0.8445332291471195,
+            "vessel_frac_in_fov": 0.08094482767100716
+          }
+        },
+        {
+          "sid": "img_017",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 77.9395484579919,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 6911584,
+            "fov_frac": 0.8443852817914556,
+            "vessel_frac_in_fov": 0.12006943704945205
+          }
+        },
+        {
+          "sid": "img_018",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 70.7265352969079,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 96,
+            "fov_area": 6914936,
+            "fov_frac": 0.8447947942077938,
+            "vessel_frac_in_fov": 0.09201285449351954
+          }
+        },
+        {
+          "sid": "img_019",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 78.10198276333897,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 73,
+            "fov_area": 6913258,
+            "fov_frac": 0.8445897936604742,
+            "vessel_frac_in_fov": 0.07705643272679828
+          }
+        },
+        {
+          "sid": "img_020",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 84.87980749495684,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 6913172,
+            "fov_frac": 0.844579287077,
+            "vessel_frac_in_fov": 0.10545275019918497
+          }
+        },
+        {
+          "sid": "img_021",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 102.17652831695284,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 180,
+            "fov_area": 6913320,
+            "fov_frac": 0.8445973681741414,
+            "vessel_frac_in_fov": 0.08904506083907587
+          }
+        },
+        {
+          "sid": "img_022",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 84.71040903514053,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 89,
+            "fov_area": 6913716,
+            "fov_frac": 0.8446457473259523,
+            "vessel_frac_in_fov": 0.08034304562119705
+          }
+        },
+        {
+          "sid": "img_023",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 84.04365847869884,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 6912686,
+            "fov_frac": 0.844519912663414,
+            "vessel_frac_in_fov": 0.1188578506242002
+          }
+        },
+        {
+          "sid": "img_024",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 84.62213414610308,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 131,
+            "fov_area": 6913451,
+            "fov_frac": 0.8446133723885032,
+            "vessel_frac_in_fov": 0.08017934892429265
+          }
+        },
+        {
+          "sid": "img_025",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 71.06105672936083,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 39,
+            "fov_area": 6915645,
+            "fov_frac": 0.8448814124366673,
+            "vessel_frac_in_fov": 0.0783591407598279
+          }
+        },
+        {
+          "sid": "img_026",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 85.41563970921686,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 6913936,
+            "fov_frac": 0.8446726246325139,
+            "vessel_frac_in_fov": 0.09205581307087599
+          }
+        },
+        {
+          "sid": "img_027",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 68.88312195553418,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 87,
+            "fov_area": 6911549,
+            "fov_frac": 0.8443810058563208,
+            "vessel_frac_in_fov": 0.10342138932965678
+          }
+        },
+        {
+          "sid": "img_028",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 86.40634329683232,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 65,
+            "fov_area": 6913722,
+            "fov_frac": 0.8446464803434041,
+            "vessel_frac_in_fov": 0.0776040749107355
+          }
+        },
+        {
+          "sid": "img_029",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 81.75895775832187,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 6913259,
+            "fov_frac": 0.8445899158300494,
+            "vessel_frac_in_fov": 0.1020413093159102
+          }
+        },
+        {
+          "sid": "img_030",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 77.73066837508601,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 51,
+            "fov_area": 6911775,
+            "fov_frac": 0.844408616180334,
+            "vessel_frac_in_fov": 0.1002471868658919
+          }
+        },
+        {
+          "sid": "img_031",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 79.011768228678,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 138,
+            "fov_area": 6913339,
+            "fov_frac": 0.8445996893960718,
+            "vessel_frac_in_fov": 0.09048521994943398
+          }
+        },
+        {
+          "sid": "img_032",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 66.45730242573393,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 45,
+            "fov_area": 6914041,
+            "fov_frac": 0.8446854524379183,
+            "vessel_frac_in_fov": 0.11063544459745032
+          }
+        },
+        {
+          "sid": "img_033",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 66.53973174493338,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 61,
+            "fov_area": 6914124,
+            "fov_frac": 0.8446955925126666,
+            "vessel_frac_in_fov": 0.08051099459598932
+          }
+        },
+        {
+          "sid": "img_034",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 83.33982408069838,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 93,
+            "fov_area": 6913584,
+            "fov_frac": 0.8446296209420154,
+            "vessel_frac_in_fov": 0.09782639510852836
+          }
+        },
+        {
+          "sid": "img_035",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 70.50931001393059,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 88,
+            "fov_area": 6912710,
+            "fov_frac": 0.8445228447332207,
+            "vessel_frac_in_fov": 0.12416924766119221
+          }
+        },
+        {
+          "sid": "img_036",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 68.62616077385793,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 14,
+            "fov_area": 6914013,
+            "fov_frac": 0.8446820316898105,
+            "vessel_frac_in_fov": 0.0809175510662187
+          }
+        },
+        {
+          "sid": "img_037",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 71.03566533062019,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 31,
+            "fov_area": 6916614,
+            "fov_frac": 0.8449997947551136,
+            "vessel_frac_in_fov": 0.0805235047090961
+          }
+        },
+        {
+          "sid": "img_038",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 70.03448484673746,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 6912464,
+            "fov_frac": 0.8444927910177019,
+            "vessel_frac_in_fov": 0.1029939541095621
+          }
+        },
+        {
+          "sid": "img_039",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 83.39691498202967,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 87,
+            "fov_area": 6914033,
+            "fov_frac": 0.844684475081316,
+            "vessel_frac_in_fov": 0.09037402627381154
+          }
+        },
+        {
+          "sid": "img_040",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 64.76506916915567,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 110,
+            "fov_area": 6915352,
+            "fov_frac": 0.8448456167511103,
+            "vessel_frac_in_fov": 0.08359068345327902
+          }
+        },
+        {
+          "sid": "img_041",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 68.3573734144018,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 11,
+            "fov_area": 6910309,
+            "fov_frac": 0.8442295155829737,
+            "vessel_frac_in_fov": 0.10333011157677609
+          }
+        },
+        {
+          "sid": "img_042",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 86.30292035781677,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 185,
+            "fov_area": 6912920,
+            "fov_frac": 0.8445485003440295,
+            "vessel_frac_in_fov": 0.07737077819503191
+          }
+        },
+        {
+          "sid": "img_043",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 84.84510017742281,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 83,
+            "fov_area": 6911891,
+            "fov_frac": 0.8444227878510665,
+            "vessel_frac_in_fov": 0.08667743747695095
+          }
+        },
+        {
+          "sid": "img_044",
+          "ok": true,
+          "checks": {
+            "shape": [
+              2336,
+              3504
+            ],
+            "img_mean": 68.50827405665541,
+            "mask_unique_count": 2,
+            "fov_unique_count": 2,
+            "mask_non_binary_px": 0,
+            "mask_px_outside_fov": 0,
+            "fov_area": 6912814,
+            "fov_frac": 0.8445355503690498,
+            "vessel_frac_in_fov": 0.09276178991652315
+          }
+        }
+      ],
+      "issues": []
+    }
+  ],
+  "cross_dataset_dups": []
+}

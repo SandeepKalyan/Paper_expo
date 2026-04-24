@@ -1,0 +1,26 @@
+[
+  {
+    "name": "DRIVE",
+    "n_train": 20,
+    "n_test": 20,
+    "n_total": 40
+  },
+  {
+    "name": "STARE",
+    "n_train": 10,
+    "n_test": 10,
+    "n_total": 20
+  },
+  {
+    "name": "CHASE_DB1",
+    "n_train": 20,
+    "n_test": 8,
+    "n_total": 28
+  },
+  {
+    "name": "HRF",
+    "n_train": 30,
+    "n_test": 15,
+    "n_total": 45
+  }
+]
