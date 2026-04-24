@@ -1,0 +1,37 @@
+seed: 42
+
+model:
+  name: rsf_paper
+  in_channels: 3
+  out_channels: 1
+  rotNum: 8
+  initS: 3
+  gapS: 1.25
+  numS: 4
+
+data:
+  name: drive
+  root: data/DRIVE
+  train_split: train
+  val_split: test
+  patch_size: [256, 256]
+  samples_per_epoch: 1024
+  batch_size: 16
+  num_workers: 8
+  pin_memory: true
+  use_paper_augs: true
+
+optim:
+  lr: 0.0002
+
+train:
+  epochs: 200
+  output_dir: outputs
+  loss: bce
+  precision: bf16
+
+eval:
+  threshold: 0.5
+  patch_overlap: true
+  patch_size: 256
+  stride: 128

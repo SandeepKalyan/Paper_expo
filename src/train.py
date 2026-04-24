@@ -72,9 +72,21 @@ def main() -> None:
 
     loss_name = str(cfg["train"].get("loss", "bce"))
     criterion = build_loss(loss_name)
-    optimizer = torch.optim.Adam(model.parameters(), lr=float(cfg["optim"].get("lr", 2e-4)))
+    lr = float(cfg["optim"].get("lr", 2e-4))
+    weight_decay = float(cfg["optim"].get("weight_decay", 0.0))
+    optimizer = torch.optim.Adam(
+        model.parameters(), lr=lr, weight_decay=weight_decay
+    )
     epochs = int(cfg["train"].get("epochs", 200))
     threshold = float(cfg["eval"].get("threshold", 0.5))
+
+    sched_name = str(cfg["optim"].get("scheduler", "none")).lower()
+    scheduler = None
+    if sched_name == "cosine":
+        eta_min = float(cfg["optim"].get("min_lr", 0.0))
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+            optimizer, T_max=epochs, eta_min=eta_min
+        )
 
     precision = str(cfg["train"].get("precision", "fp32")).lower()
     amp_dtype = None
@@ -135,12 +147,16 @@ def main() -> None:
             pbar.set_postfix({"loss": f"{loss.item():.4f}"})
 
         train_sec = time.time() - t0
+        if scheduler is not None:
+            scheduler.step()
+        cur_lr = optimizer.param_groups[0]["lr"]
         metrics = evaluate(model, val_loader, device=device, threshold=threshold, amp_dtype=amp_dtype)
         avg_loss = epoch_loss / max(len(train_loader), 1)
         row = {
             "epoch": epoch,
             "train_loss": avg_loss,
             "train_sec": round(train_sec, 2),
+            "lr": cur_lr,
             **metrics,
         }
         history.append(row)
