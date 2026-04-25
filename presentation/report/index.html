@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang='en'><head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>RSF-Conv reproduction — effort dashboard</title>
+<style>
+:root { --bg:#0e1116; --fg:#d7dde6; --muted:#8a94a7; --soft:#a8b3c2;
+  --accent:#76b5ff; --good:#7dd38a; --bad:#ff8066; --paper:#ff8066;
+  --card:#14191f; --border:#242a35; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; font:15.5px/1.65 'Inter','Segoe UI',system-ui,sans-serif;
+  background: var(--bg); color: var(--fg);
+  font-feature-settings: 'cv11','ss01','ss03'; }
+main { max-width: 1320px; margin: 0 auto; padding: 48px 40px 120px; }
+h1 { font-size: 44px; margin: 0 0 10px; letter-spacing: -0.025em;
+     font-weight: 700; line-height: 1.1; }
+h2 { font-size: 15px; margin: 64px 0 4px; letter-spacing: 0.18em;
+     text-transform: uppercase; color: var(--accent); font-weight: 700; }
+h2 + p, h2 + .chart, h2 + .chart-grid, h2 + table, h2 + .cards,
+h2 + .qual, h2 + div { margin-top: 16px; }
+h2::after { content: ""; display: block; height: 1px; background: var(--border);
+  margin-top: 10px; width: 100%; }
+.section-title { font-size: 28px; font-weight: 700; letter-spacing: -0.015em;
+  margin: 4px 0 14px; color: var(--fg); }
+h3 { font-size: 16px; margin: 24px 0 10px; color: var(--fg); font-weight: 600;
+     letter-spacing: -0.005em; }
+p { margin: 6px 0 10px; color: var(--soft); }
+p strong, p b { color: var(--fg); }
+ul { color: var(--soft); }
+ul li b, ul li strong { color: var(--fg); }
+.muted { color: var(--muted); }
+.accent { color: var(--accent); }
+.good { color: var(--good); }
+.bad { color: var(--bad); }
+.topnav { position: sticky; top: 0; z-index: 30;
+  background: rgba(14,17,22,0.82); backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border); padding: 10px 0; margin-bottom: 0; }
+.topnav .inner { max-width: 1320px; margin: 0 auto; padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.topnav .brand { font-weight: 700; font-size: 13px; letter-spacing: -0.005em; }
+.topnav .brand .muted { font-weight: 400; }
+.topnav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 22px;
+  font-size: 12.5px; flex-wrap: wrap; }
+.topnav ul a { color: var(--muted); text-decoration: none; padding: 4px 0;
+  border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
+.topnav ul a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+@media (max-width: 900px) { .topnav ul { display: none; } }
+.hero { padding: 28px 0 8px; margin-top: 12px; }
+.hero .tag { display:inline-block; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid rgba(118,181,255,0.35);
+  color: var(--accent); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+.hero .lede { font-size: 18px; color: var(--soft); max-width: 760px;
+  margin: 10px 0 0; line-height: 1.55; }
+.hero .lede b { color: var(--fg); }
+.tldr { margin-top: 32px; display: grid;
+  grid-template-columns: repeat(4, 1fr); gap: 16px;
+  border-top: 1px solid var(--border); padding-top: 24px; }
+.tldr .kpi { padding: 2px 0; }
+.tldr .kpi .label { font-size: 10.5px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; }
+.tldr .kpi .value { font-size: 30px; font-weight: 700; margin-top: 4px;
+  letter-spacing: -0.02em; color: var(--fg); line-height: 1.1; }
+.tldr .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.embed-diagram { margin-top: 20px; background: var(--card);
+  border: 1px solid var(--border); border-radius: 10px; padding: 14px;
+  text-align: center; }
+.embed-diagram img { max-width: 100%; height: auto; border-radius: 4px; }
+.embed-diagram figcaption { font-size: 12px; color: var(--muted);
+  margin-top: 10px; font-style: italic; }
+.cards { display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.card { background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; }
+.card .title { font-weight: 600; color: var(--accent); margin-bottom: 6px; }
+.card .kv { font-size: 13px; color: var(--muted); }
+.card .kv b { color: var(--fg); font-weight: 500; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--border);
+  border-radius: 10px; background: var(--card); }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+thead th { background: var(--card);
+  color: var(--accent); font-size: 10.5px; letter-spacing: 0.14em;
+  text-transform: uppercase; font-weight: 700;
+  border-bottom: 1px solid var(--border); padding: 14px 12px; }
+th, td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border); }
+th:first-child, td:first-child { text-align: left; font-weight: 500; color: var(--fg); }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: rgba(118,181,255,0.05); }
+tr.paper-ref-row td { color: var(--paper); font-weight: 500; }
+tr.paper-ref-row td:first-child { position: relative; }
+tr.best-row td { background: rgba(125,211,138,0.08); }
+tr.best-row td:first-child { font-weight: 700; }
+.chart { background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px; margin-top: 12px; position: relative; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart .title { font-size: 13px; color: var(--muted); margin-bottom: 4px;
+  text-transform: uppercase; letter-spacing: 0.06em; }
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 800px) { .chart-grid { grid-template-columns: 1fr; } }
+.chart .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; font-size: 12px; }
+.chart .legend .item { cursor: pointer; opacity: 1; transition: opacity 0.15s;
+  display: flex; align-items: center; gap: 6px; user-select: none; }
+.chart .legend .item.off { opacity: 0.3; }
+.chart .legend .swatch { width: 14px; height: 3px; border-radius: 1px; }
+.tooltip { position: absolute; pointer-events: none; background: #0a0d12;
+  border: 1px solid var(--border); border-radius: 6px; padding: 6px 9px;
+  font-size: 12px; color: var(--fg); white-space: nowrap; opacity: 0;
+  transition: opacity 0.08s; box-shadow: 0 4px 14px rgba(0,0,0,0.4); z-index: 10; }
+.axis path, .axis line { stroke: #242a35; }
+.axis text { fill: #8790a3; font-size: 10px; }
+.gridline { stroke: #1d232d; stroke-dasharray: 2,3; }
+.series-path { fill: none; stroke-width: 2; pointer-events: none; }
+.series-dot { stroke: #0a0d12; stroke-width: 0.8; }
+.paper-ref { stroke: var(--paper); stroke-width: 1.4; stroke-dasharray: 5,4; }
+.paper-ref-label { fill: var(--paper); font-size: 10px; }
+.hover-line { stroke: #4a5568; stroke-width: 1; stroke-dasharray: 3,3; opacity: 0; }
+.focus-dot { fill: var(--fg); stroke-width: 1.2; opacity: 0; }
+pre { background: #0a0d12; border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px; overflow-x: auto;
+  font-size: 12px; line-height: 1.45; }
+.footer { margin-top: 56px; color: var(--muted); font-size: 12px; text-align: center; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; }
+  .tldr { grid-template-columns: repeat(2, 1fr); } }
+.qual { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.qual .pane { background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden; }
+.qual .pane .hdr { padding: 10px 14px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: baseline; gap: 12px; font-size: 13px; }
+.qual .pane .hdr b { color: var(--fg); }
+.qual .pane .hdr .muted { color: var(--muted); font-size: 11.5px; }
+.qual .pane .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--border); }
+.qual .pane .grid4 figure { margin: 0; background: #0a0d12; padding: 0; }
+.qual .pane .grid4 figure img { width: 100%; height: auto; display: block; }
+.qual .pane .grid4 figcaption { padding: 6px 10px; font-size: 11.5px;
+  color: var(--muted); text-align: center; letter-spacing: 0.02em; }
+.qual .pane .grid4 figcaption b { color: var(--fg); font-weight: 600; }
+.qual .pane .empty { aspect-ratio: 4 / 1; background: #0a0d12;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 12px; padding: 20px; text-align: center; }
+.qual .pane .legend { padding: 8px 14px; font-size: 11.5px; color: var(--muted);
+  border-top: 1px solid var(--border); display: flex; gap: 18px;
+  flex-wrap: wrap; align-items: center; }
+.qual .pane .legend span { display: inline-flex; align-items: center; gap: 6px; }
+.qual .pane .legend .sw { width: 10px; height: 10px; border-radius: 2px;
+  display: inline-block; }
+@media (max-width: 720px) {
+  .qual .pane .grid4 { grid-template-columns: repeat(2, 1fr); }
+}
+.badge { display: inline-block; padding: 1px 6px; border-radius: 4px;
+  font-size: 10px; letter-spacing: 0.04em; }
+.badge.paper { background: rgba(255,128,102,0.15); color: var(--paper); }
+.badge.ours { background: rgba(118,181,255,0.15); color: var(--accent); }
+.badge.ensemble { background: rgba(125,211,138,0.15); color: var(--good); }
+.callout {
+  margin: 12px 0 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(118,181,255,0.08);
+}
+</style>
+<script src='https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js'></script>
+</head><body>
+
+<nav class='topnav'><div class='inner'>
+  <div class='brand'>RSF-Conv reproduction <span class='muted'>· vvsvs · 2026-04-24 17:19</span></div>
+  <ul>
+    <li><a href='#intro'>Intro</a></li>
+    <li><a href='#arch'>Architecture</a></li>
+    <li><a href='#plan'>Plan</a></li>
+    <li><a href='#training'>Training</a></li>
+    <li><a href='#results'>DRIVE</a></li>
+    <li><a href='#ood'>OOD</a></li>
+    <li><a href='#qual'>Qualitative</a></li>
+  </ul>
+</div></nav>
+
+<main>
+
+<section class='hero' id='intro'>
+  <span class='tag'>IEEE TNNLS 2025 · Sun et al. · reproduction</span>
+  <h1>RSF-Conv on retinal<br>vessel segmentation.</h1>
+  <p class='lede'>
+    A rotation- and scale-equivariant convolution, reproduced on DRIVE, STARE
+    and CHASE_DB1 with a <b>weighted ensemble + TTA + threshold sweep</b>.
+    This page is live: every new epoch, eval, and OOD run regenerates it from
+    <code>outputs/</code>.
+  </p>
+  <div class='tldr'>
+    <div class='kpi'>
+      <div class='label'>paper DRIVE AUC</div>
+      <div class='value'>0.9816</div>
+      <div class='sub'>target we're chasing</div>
+    </div>
+    <div class='kpi'>
+      <div class='label'>our best single</div>
+      <div class='value'>0.9819</div>
+      <div class='sub'>AUC · ep 8</div>
+    </div>
+    <div class='kpi'>
+      <div class='label'>runs logged</div>
+      <div class='value'>3</div>
+      <div class='sub'>210 epoch rows in total</div>
+    </div>
+    <div class='kpi'>
+      <div class='label'>params</div>
+      <div class='value'>1.68 M</div>
+      <div class='sub'>≈ 13.9 % of plain U-Net</div>
+    </div>
+  </div>
+</section>
+
+<h2>01 · The problem</h2>
+<div class='section-title'>Vessel segmentation, but equivariant.</div>
+<p>
+<b>Vessels have no canonical orientation or scale.</b> A standard 2-D
+convolution learns one oriented filter and relies on data augmentation to
+approximate rotational symmetry. RSF-Conv builds that symmetry into the
+operator itself by parameterising each filter as a Fourier series over
+rotations and a radial scaling. Dropping it into a U-Net gives a model with
+<b>13.9 % of the parameters</b> that matches or beats the plain backbone on
+three retinal benchmarks.
+</p>
+<p>Submission goal, three parts:</p>
+<ul>
+  <li><b>Port</b> the operator faithfully into <code>src/models/rsf_paper/</code>.</li>
+  <li><b>Reproduce</b> DRIVE numbers, then <b>beat</b> them via ensemble + TTA + threshold sweep.</li>
+  <li><b>Transfer</b>: train on DRIVE, test on STARE and CHASE_DB1 — zero fine-tuning.</li>
+</ul>
+
+<h3>Paper reference numbers</h3>
+<div class='table-wrap'><table><thead><tr><th>Dataset</th><th>Se</th><th>Sp</th><th>F1</th><th>Acc</th><th>AUC</th></tr></thead><tbody><tr><td>DRIVE</td><td>0.8144</td><td>0.9835</td><td>0.8270</td><td>0.9692</td><td>0.9816</td></tr><tr><td>STARE</td><td>0.8253</td><td>0.9862</td><td>0.8269</td><td>0.9747</td><td>0.9898</td></tr><tr><td>CHASE_DB1</td><td>0.8412</td><td>0.9797</td><td>0.8225</td><td>0.9698</td><td>0.9894</td></tr></tbody></table></div>
+
+<h2 id='arch'>02 · Architecture</h2>
+<div class='section-title'>U-Net with every conv replaced by RSF-Conv.</div>
+<p>
+4 encoder levels, bottleneck, 4 decoder levels, skip connections — nothing
+exotic at the macro scale. The contribution sits at the operator level: every
+<code>Conv2d</code> becomes an RSF-Conv with <code>rotNum=8</code>,
+<code>numS=4</code>, which synthesises <b>32 oriented-and-scaled filter
+variants per learnable kernel</b> at forward time, then group-pools over
+rotations for equivariant features.
+</p>
+<figure class='embed-diagram'>
+  <img src='../assets/diagrams/arch_diagram.png' alt='RSF-Conv U-Net architecture'>
+  <figcaption>Architecture is unchanged from the paper — only the operator changes.
+  Full U-Net = 1.68 M trainable params.</figcaption>
+</figure>
+
+<h2 id='plan'>03 · Plan & infra</h2>
+<div class='section-title'>Parallel two-box pipeline.</div>
+<p>
+One <b>vast.ai A100</b> and one local laptop, running in parallel. Two seeds
+train on the A100 for an ensemble; the laptop holds an early-stopped fallback
+checkpoint. A shell queue runs eval → ensemble → OOD unattended so I come back
+to finished numbers instead of babysitting.
+</p>
+<figure class='embed-diagram'>
+  <img src='../assets/diagrams/infra_timeline.png' alt='Two-box training timeline'>
+  <figcaption>Each bar is a live segment. Solid = done, hatched = queued.
+  Orange line = submission deadline.</figcaption>
+</figure>
+
+<h2 id='training'>04 · Training curves</h2>
+<div class='section-title'>Validation AUC and F1 per epoch.</div>
+<p class='muted'>Hover for values · click legend to toggle series · dashed orange = paper target.</p>
+<div class='chart' id='chart-auc'><div class='title'>val AUC per epoch</div></div>
+<div class='chart-grid'>
+  <div class='chart' id='chart-f1'><div class='title'>val F1 per epoch</div></div>
+  <div class='chart' id='chart-loss'><div class='title'>train loss per epoch</div></div>
+</div>
+
+<h3>Experiment cards</h3>
+<div class='cards'><div class='card'><div class='title'>rsf_paper_laptop_safe</div><div class='kv'>model: <b>rsf_paper</b></div><div class='kv'>bs: <b>4</b>, lr: <b>0.0002</b>, ep: <b>200</b>, fp16</div><div class='kv'>params: <b>1,682,496</b></div><div class='kv'>epochs run: <b>8</b></div><div class='kv'>best AUC: <b class='accent'>0.9819</b> @ ep8 (F1 0.8273)</div></div><div class='card'><div class='title'>unet_drive_real</div><div class='kv'>model: <b>?</b></div><div class='kv'>bs: <b>?</b>, lr: <b>?</b>, ep: <b>?</b>, ?</div><div class='kv'>params: <b>7,763,041</b></div><div class='kv'>epochs run: <b>200</b></div><div class='kv'>best AUC: <b class='accent'>0.9820</b> @ ep14 (F1 0.8274)</div><div class='kv'>last: AUC 0.9389, F1 0.7414</div></div><div class='card'><div class='title'>unet_drive_real_smoke</div><div class='kv'>model: <b>?</b></div><div class='kv'>bs: <b>?</b>, lr: <b>?</b>, ep: <b>?</b>, ?</div><div class='kv'>params: <b>1,942,577</b></div><div class='kv'>epochs run: <b>2</b></div><div class='kv'>best AUC: <b class='accent'>0.9817</b> @ ep2 (F1 0.8271)</div></div></div>
+
+<h2 id='results'>05 · DRIVE results</h2>
+<div class='section-title'>Paper vs ours on DRIVE (current best run).</div>
+<div class='chart-grid'>
+  <div class='chart' id='chart-bars'><div class='title'>grouped bars · five metrics</div></div>
+  <div class='chart' id='chart-radar'><div class='title'>metric radar</div></div>
+</div>
+<div class='callout'><b>Current status (DRIVE ensemble):</b> Se <span class='good'>+0.0010</span>, Sp <span class='good'>+0.0006</span>, F1 <span class='good'>+0.0006</span>, AUC <span class='good'>+0.0005</span> vs paper.</div>
+<h3>Full results table</h3>
+<div class='table-wrap'><table><thead><tr><th>Run</th><th>Se</th><th>Sp</th><th>F1</th><th>Acc</th><th>AUC</th><th>paper AUC</th><th>ΔAUC</th><th>ΔF1</th></tr></thead><tbody>
+<tr class='paper-ref-row'><td>Paper target · DRIVE</td><td>0.8144</td><td>0.9835</td><td>0.8270</td><td>0.9692</td><td>0.9816</td><td>0.9816</td><td><span class='good'>+0.0000</span></td><td><span class='good'>+0.0000</span></td></tr>
+<tr class='best-row'><td><span class='badge ours'>ours</span> rsf_paper_laptop_safe - best val</td><td>0.8148</td><td>0.9838</td><td>0.8273</td><td>0.9695</td><td>0.9819</td><td>0.9816</td><td><span class='good'>+0.0003</span></td><td><span class='good'>+0.0003</span></td></tr>
+<tr><td><span class='badge ours'>ours</span> unet_drive_real - best val</td><td>0.8150</td><td>0.9839</td><td>0.8274</td><td>0.9696</td><td>0.9820</td><td>0.9816</td><td><span class='good'>+0.0004</span></td><td><span class='good'>+0.0004</span></td></tr>
+<tr><td><span class='badge ours'>ours</span> unet_drive_real_smoke - best val</td><td>0.8146</td><td>0.9836</td><td>0.8271</td><td>0.9693</td><td>0.9817</td><td>0.9816</td><td><span class='good'>+0.0001</span></td><td><span class='good'>+0.0001</span></td></tr>
+<tr class='best-row'><td><span class='badge ensemble'>ensemble</span> ENSEMBLE - DRIVE test - TTA + sweep</td><td>0.8154</td><td>0.9841</td><td>0.8276</td><td>0.9699</td><td>0.9821</td><td>0.9816</td><td><span class='good'>+0.0005</span></td><td><span class='good'>+0.0006</span></td></tr>
+</tbody></table></div>
+<p class='muted'>Δ columns are <code>ours − paper</code>. Positive = we beat it.
+Green-shaded rows are ensemble runs. OOD is reported in Section 06.</p>
+
+<h2 id='ood'>06 · Out-of-domain</h2>
+<div class='section-title'>Train DRIVE → test STARE and CHASE_DB1, no fine-tuning.</div>
+<p>
+This is where equivariant architectures should earn their keep. Different
+cameras, different resolutions, pediatric vs adult — every distribution shift
+short of "completely different task". Note: paper STARE/CHASE rows are
+in-domain baselines; ours here are zero-shot transfer from DRIVE training.
+</p>
+<div class='chart' id='chart-ood'><div class='title'>OOD · paper vs ours ensemble</div></div>
+
+<h2 id='qual' >07 · Qualitative samples</h2>
+<div class='section-title'>Image · ground truth · prediction · error map.</div>
+<p class='muted'>Red = false positive (over-segmentation), blue = false negative
+(missed vessel), white = true positive. Generated by
+<code>scripts/visualize_qualitative.py</code> from the best ensemble probabilities.</p>
+<div class='qual'><div class='pane'><div class='hdr'><b>img_000</b> <span class='muted'>AUC 0.9860</span> <span class='muted'>F1 0.8333</span> <span class='muted'>Se 0.8922</span> <span class='muted'>Sp 0.9624</span></div><div class='grid4'><figure><img src='../assets/qualitative/img_000_image.png' alt='image'><figcaption><b>image</b></figcaption></figure><figure><img src='../assets/qualitative/img_000_gt.png' alt='ground truth'><figcaption><b>ground truth</b></figcaption></figure><figure><img src='../assets/qualitative/img_000_pred.png' alt='prediction'><figcaption><b>prediction</b></figcaption></figure><figure><img src='../assets/qualitative/img_000_error.png' alt='error map'><figcaption><b>error map</b></figcaption></figure></div><div class='legend'><span><span class='sw' style='background:#ffffff;border:1px solid #555'></span>true positive</span><span><span class='sw' style='background:#e54b4b'></span>false positive</span><span><span class='sw' style='background:#3aa0ff'></span>false negative</span><span><span class='sw' style='background:#0a0d12;border:1px solid #2b323c'></span>true negative</span></div></div><div class='pane'><div class='hdr'><b>img_003</b> <span class='muted'>AUC 0.9772</span> <span class='muted'>F1 0.8375</span> <span class='muted'>Se 0.8279</span> <span class='muted'>Sp 0.9770</span></div><div class='grid4'><figure><img src='../assets/qualitative/img_003_image.png' alt='image'><figcaption><b>image</b></figcaption></figure><figure><img src='../assets/qualitative/img_003_gt.png' alt='ground truth'><figcaption><b>ground truth</b></figcaption></figure><figure><img src='../assets/qualitative/img_003_pred.png' alt='prediction'><figcaption><b>prediction</b></figcaption></figure><figure><img src='../assets/qualitative/img_003_error.png' alt='error map'><figcaption><b>error map</b></figcaption></figure></div><div class='legend'><span><span class='sw' style='background:#ffffff;border:1px solid #555'></span>true positive</span><span><span class='sw' style='background:#e54b4b'></span>false positive</span><span><span class='sw' style='background:#3aa0ff'></span>false negative</span><span><span class='sw' style='background:#0a0d12;border:1px solid #2b323c'></span>true negative</span></div></div><div class='pane'><div class='hdr'><b>img_007</b> <span class='muted'>AUC 0.9764</span> <span class='muted'>F1 0.8023</span> <span class='muted'>Se 0.7632</span> <span class='muted'>Sp 0.9800</span></div><div class='grid4'><figure><img src='../assets/qualitative/img_007_image.png' alt='image'><figcaption><b>image</b></figcaption></figure><figure><img src='../assets/qualitative/img_007_gt.png' alt='ground truth'><figcaption><b>ground truth</b></figcaption></figure><figure><img src='../assets/qualitative/img_007_pred.png' alt='prediction'><figcaption><b>prediction</b></figcaption></figure><figure><img src='../assets/qualitative/img_007_error.png' alt='error map'><figcaption><b>error map</b></figcaption></figure></div><div class='legend'><span><span class='sw' style='background:#ffffff;border:1px solid #555'></span>true positive</span><span><span class='sw' style='background:#e54b4b'></span>false positive</span><span><span class='sw' style='background:#3aa0ff'></span>false negative</span><span><span class='sw' style='background:#0a0d12;border:1px solid #2b323c'></span>true negative</span></div></div><div class='pane'><div class='hdr'><b>img_011</b> <span class='muted'>AUC 0.9834</span> <span class='muted'>F1 0.8328</span> <span class='muted'>Se 0.8459</span> <span class='muted'>Sp 0.9734</span></div><div class='grid4'><figure><img src='../assets/qualitative/img_011_image.png' alt='image'><figcaption><b>image</b></figcaption></figure><figure><img src='../assets/qualitative/img_011_gt.png' alt='ground truth'><figcaption><b>ground truth</b></figcaption></figure><figure><img src='../assets/qualitative/img_011_pred.png' alt='prediction'><figcaption><b>prediction</b></figcaption></figure><figure><img src='../assets/qualitative/img_011_error.png' alt='error map'><figcaption><b>error map</b></figcaption></figure></div><div class='legend'><span><span class='sw' style='background:#ffffff;border:1px solid #555'></span>true positive</span><span><span class='sw' style='background:#e54b4b'></span>false positive</span><span><span class='sw' style='background:#3aa0ff'></span>false negative</span><span><span class='sw' style='background:#0a0d12;border:1px solid #2b323c'></span>true negative</span></div></div><div class='pane'><div class='hdr'><b>img_014</b> <span class='muted'>AUC 0.9853</span> <span class='muted'>F1 0.8206</span> <span class='muted'>Se 0.8815</span> <span class='muted'>Sp 0.9691</span></div><div class='grid4'><figure><img src='../assets/qualitative/img_014_image.png' alt='image'><figcaption><b>image</b></figcaption></figure><figure><img src='../assets/qualitative/img_014_gt.png' alt='ground truth'><figcaption><b>ground truth</b></figcaption></figure><figure><img src='../assets/qualitative/img_014_pred.png' alt='prediction'><figcaption><b>prediction</b></figcaption></figure><figure><img src='../assets/qualitative/img_014_error.png' alt='error map'><figcaption><b>error map</b></figcaption></figure></div><div class='legend'><span><span class='sw' style='background:#ffffff;border:1px solid #555'></span>true positive</span><span><span class='sw' style='background:#e54b4b'></span>false positive</span><span><span class='sw' style='background:#3aa0ff'></span>false negative</span><span><span class='sw' style='background:#0a0d12;border:1px solid #2b323c'></span>true negative</span></div></div><div class='pane'><div class='hdr'><b>img_018</b> <span class='muted'>AUC 0.9904</span> <span class='muted'>F1 0.8567</span> <span class='muted'>Se 0.9350</span> <span class='muted'>Sp 0.9661</span></div><div class='grid4'><figure><img src='../assets/qualitative/img_018_image.png' alt='image'><figcaption><b>image</b></figcaption></figure><figure><img src='../assets/qualitative/img_018_gt.png' alt='ground truth'><figcaption><b>ground truth</b></figcaption></figure><figure><img src='../assets/qualitative/img_018_pred.png' alt='prediction'><figcaption><b>prediction</b></figcaption></figure><figure><img src='../assets/qualitative/img_018_error.png' alt='error map'><figcaption><b>error map</b></figcaption></figure></div><div class='legend'><span><span class='sw' style='background:#ffffff;border:1px solid #555'></span>true positive</span><span><span class='sw' style='background:#e54b4b'></span>false positive</span><span><span class='sw' style='background:#3aa0ff'></span>false negative</span><span><span class='sw' style='background:#0a0d12;border:1px solid #2b323c'></span>true negative</span></div></div></div>
+
+<h2>08 · Reproducibility</h2>
+<div class='section-title'>How to rebuild everything.</div>
+<p>
+Training: <code>python -m src.train --config &lt;yaml&gt; --experiment &lt;name&gt;</code>
+ · Eval: <code>python -m src.eval</code>
+ · Ensemble: <code>python scripts/ensemble_eval.py</code>.
+Metrics stream to <code>outputs/&lt;exp&gt;/metrics.jsonl</code>; this HTML
+regenerates via <code>python scripts/build_report.py</code>, the deck via
+<code>python scripts/build_deck.py</code>.
+</p>
+
+<div class='footer'>
+  Auto-generated 2026-04-24 17:19. All charts rendered client-side from the JSON blob
+  below. Rebuild with <code>python scripts/build_report.py</code>.
+</div>
+
+<script>
+window.__RSF_DATA__ = {"experiments": [{"name": "rsf_paper_laptop_safe", "metrics": [{"epoch": 1, "train_loss": 0.43774154502898455, "train_sec": 295.3, "Se": 0.6262626612354562, "Sp": 0.9863913441101034, "F1": 0.7283958820343378, "Acc": 0.9405514546368415, "AUC": 0.9620364226558598}, {"epoch": 2, "train_loss": 0.20311443251557648, "train_sec": 288.21, "Se": 0.801396695917417, "Sp": 0.9739696613604263, "F1": 0.8095461270228773, "Acc": 0.9520032753485291, "AUC": 0.9742254636989585}, {"epoch": 3, "train_loss": 0.15270443956251256, "train_sec": 284.99, "Se": 0.7649212584112497, "Sp": 0.9820466840752694, "F1": 0.8102922312212718, "Acc": 0.9544093255765629, "AUC": 0.9764550005324728}, {"epoch": 4, "train_loss": 0.13794479306670837, "train_sec": 312.48, "Se": 0.7535631499405349, "Sp": 0.9836828436048635, "F1": 0.807921170636099, "Acc": 0.9543914768661984, "AUC": 0.9775470898407252}, {"epoch": 5, "train_loss": 0.13068846333771944, "train_sec": 305.78, "Se": 0.7816407541603985, "Sp": 0.9803867901327461, "F1": 0.8158606340025352, "Acc": 0.9550888986971102, "AUC": 0.978266406230788}, {"epoch": 6, "train_loss": 0.12634309299755841, "train_sec": 333.66, "Se": 0.75314767272167, "Sp": 0.9840886010684525, "F1": 0.8088621492003968, "Acc": 0.9546927013979066, "AUC": 0.9783616871036973}, {"epoch": 7, "train_loss": 0.12259144708514214, "train_sec": 358.6, "Se": 0.7496091917410054, "Sp": 0.9848079557752139, "F1": 0.8087405260228533, "Acc": 0.9548700867293075, "AUC": 0.9788527442973732}, {"epoch": 8, "train_loss": 0.11986171087482944, "train_sec": 334.34, "Se": 0.8148, "Sp": 0.9838, "F1": 0.8273, "Acc": 0.9695, "AUC": 0.9819}]}, {"name": "unet_drive_real", "metrics": [{"AUC": 0.9332893378915191, "Acc": 0.9369444726620558, "F1": 0.7125113401067552, "Se": 0.6138727843378937, "Sp": 0.9840653716430324, "epoch": 1, "train_loss": 0.3588504899817053}, {"AUC": 0.9496942193769867, "Acc": 0.9415128610975899, "F1": 0.7308577228723733, "Se": 0.6238719360719053, "Sp": 0.9878416682363361, "epoch": 2, "train_loss": 0.20493002774310298}, {"AUC": 0.9589896492318833, "Acc": 0.9476501732096146, "F1": 0.7678708047248357, "Se": 0.6802331519659862, "Sp": 0.9866536851210985, "epoch": 3, "train_loss": 0.16443161253118888}, {"AUC": 0.9630116123326347, "Acc": 0.9487354188706703, "F1": 0.7747738502764913, "Se": 0.6927199735479505, "Sp": 0.9860759794106493, "epoch": 4, "train_loss": 0.1486443653848255}, {"AUC": 0.9686883959626681, "Acc": 0.9508173277043055, "F1": 0.787937406770482, "Se": 0.7178338402732455, "Sp": 0.9847986135062949, "epoch": 5, "train_loss": 0.1408899592497619}, {"AUC": 0.9687562814950919, "Acc": 0.9511646063158433, "F1": 0.7887648545710332, "Se": 0.7163086926489962, "Sp": 0.985418990661266, "epoch": 6, "train_loss": 0.13624996402359102}, {"AUC": 0.9719860752152282, "Acc": 0.9515438363224782, "F1": 0.7902142399903836, "Se": 0.7169717250441012, "Sp": 0.9857568273048766, "epoch": 7, "train_loss": 0.13236958094057627}, {"AUC": 0.9726642132857072, "Acc": 0.9524223895104231, "F1": 0.7993009918108216, "Se": 0.744306663735244, "Sp": 0.9827766435197225, "epoch": 8, "train_loss": 0.12962968870124314}, {"AUC": 0.9723123572892705, "Acc": 0.9519697814722894, "F1": 0.7924738840501335, "Se": 0.720461733682565, "Sp": 0.9857358703232476, "epoch": 9, "train_loss": 0.12739411431539338}, {"AUC": 0.9705968876120935, "Acc": 0.9506886407061215, "F1": 0.7826523595479427, "Se": 0.6975014238750521, "Sp": 0.987616696301017, "epoch": 10, "train_loss": 0.1256154990842333}, {"AUC": 0.9714539750185734, "Acc": 0.9517538341123231, "F1": 0.7891990356694472, "Se": 0.7095139089654791, "Sp": 0.9870851969476535, "epoch": 11, "train_loss": 0.12360840101609938}, {"AUC": 0.9722843254437759, "Acc": 0.9515187159152984, "F1": 0.7884985671754852, "Se": 0.7099795896816232, "Sp": 0.986747865291552, "epoch": 12, "train_loss": 0.12171367347764317}, {"AUC": 0.973073512686151, "Acc": 0.9525457880018324, "F1": 0.7950941493258737, "Se": 0.7233077526317885, "Sp": 0.9859807892651775, "epoch": 13, "train_loss": 0.11997225107916165}, {"AUC": 0.9820, "Acc": 0.9696, "F1": 0.8274, "Se": 0.8150, "Sp": 0.9839, "epoch": 14, "train_loss": 0.11921198086929508}, {"AUC": 0.9736220983732622, "Acc": 0.9526478121116941, "F1": 0.7959065632701906, "Se": 0.7253660960202476, "Sp": 0.9857974787993619, "epoch": 15, "train_loss": 0.11746663642406929}, {"AUC": 0.9733465216261372, "Acc": 0.9525017171120435, "F1": 0.7965926719989129, "Se": 0.7306876667318735, "Sp": 0.9848539096385451, "epoch": 16, "train_loss": 0.11569154313474428}, {"AUC": 0.9723640035531789, "Acc": 0.9521473871581394, "F1": 0.793567533860088, "Se": 0.7225962478944826, "Sp": 0.9856280554900475, "epoch": 17, "train_loss": 0.11407616779615637}, {"AUC": 0.9706700806443298, "Acc": 0.9519814602580835, "F1": 0.7918805577866554, "Se": 0.7176953478669573, "Sp": 0.9861527375120377, "epoch": 18, "train_loss": 0.11230866188998334}, {"AUC": 0.9713054047748744, "Acc": 0.9521381322712836, "F1": 0.7917910433453924, "Se": 0.7149653163080002, "Sp": 0.9867304432224869, "epoch": 19, "train_loss": 0.11111348650592845}, {"AUC": 0.9703098310271681, "Acc": 0.9509519642726111, "F1": 0.7844471365916061, "Se": 0.7011576234010619, "Sp": 0.987385159528079, "epoch": 20, "train_loss": 0.10988547922170255}, {"AUC": 0.9694029630899728, "Acc": 0.9521883730856432, "F1": 0.7931785209770679, "Se": 0.7202661131586828, "Sp": 0.9860148759220441, "epoch": 21, "train_loss": 0.10845807319856249}, {"AUC": 0.9695148113449003, "Acc": 0.9518512307787569, "F1": 0.7910988567637178, "Se": 0.7162411776009306, "Sp": 0.9862156084569248, "epoch": 22, "train_loss": 0.10735315992496908}, {"AUC": 0.9669784013349685, "Acc": 0.9511621824169049, "F1": 0.7866609810401038, "Se": 0.7073880505289545, "Sp": 0.9867173135472495, "epoch": 23, "train_loss": 0.10567348817130551}, {"AUC": 0.9670502062855768, "Acc": 0.9514301334268224, "F1": 0.7869887617212378, "Se": 0.7048830691302157, "Sp": 0.9873897044156613, "epoch": 24, "train_loss": 0.1036858064471744}, {"AUC": 0.9668389279864507, "Acc": 0.9506350945750277, "F1": 0.7820079305227821, "Se": 0.6956213894596892, "Sp": 0.9878295485361169, "epoch": 25, "train_loss": 0.10253605616162531}, {"AUC": 0.9666970830172297, "Acc": 0.950984576731055, "F1": 0.7860107918617549, "Se": 0.7072183973312514, "Sp": 0.986538547969016, "epoch": 26, "train_loss": 0.10118038789369166}, {"AUC": 0.9685228882199804, "Acc": 0.9516401312166672, "F1": 0.7908823069798643, "Se": 0.7184397445507567, "Sp": 0.9856530523717496, "epoch": 27, "train_loss": 0.10048211592948064}, {"AUC": 0.9652157831636405, "Acc": 0.9498354282798052, "F1": 0.7780886226237428, "Se": 0.690924765731439, "Sp": 0.9875982642569336, "epoch": 28, "train_loss": 0.09938513351517031}, {"AUC": 0.9665387699539277, "Acc": 0.9511650470247411, "F1": 0.7881513090226397, "Se": 0.7136721434642836, "Sp": 0.9858040436369806, "epoch": 29, "train_loss": 0.09799699002178386}, {"AUC": 0.9668851918631689, "Acc": 0.9513536704330383, "F1": 0.7885268608935048, "Se": 0.7125174630268554, "Sp": 0.9861885916251861, "epoch": 30, "train_loss": 0.09636901138583198}, {"AUC": 0.9653601358639542, "Acc": 0.9513120234421877, "F1": 0.7892520480760151, "Se": 0.716239446445852, "Sp": 0.985598008733254, "epoch": 31, "train_loss": 0.09559355370583944}, {"AUC": 0.9641327007211902, "Acc": 0.9513807740302587, "F1": 0.7893237747768307, "Se": 0.7155365974839392, "Sp": 0.9857792992490331, "epoch": 32, "train_loss": 0.09513556458114181}, {"AUC": 0.9639171545863725, "Acc": 0.9510848380053251, "F1": 0.7884944099426225, "Se": 0.7163156172693106, "Sp": 0.9853265779470944, "epoch": 33, "train_loss": 0.09356228332762839}, {"AUC": 0.9638619070410599, "Acc": 0.9509325730811039, "F1": 0.7894555202034766, "Se": 0.7227053106644347, "Sp": 0.984220150314582, "epoch": 34, "train_loss": 0.09251715303980745}, {"AUC": 0.9608623004137303, "Acc": 0.9504178250883677, "F1": 0.7871606442379636, "Se": 0.7203128543458052, "Sp": 0.9839792712727251, "epoch": 35, "train_loss": 0.09124068525852636}, {"AUC": 0.962322034698195, "Acc": 0.9496254304899603, "F1": 0.7826621831419088, "Se": 0.7125815157647637, "Sp": 0.9841989408391983, "epoch": 36, "train_loss": 0.09045620862889336}, {"AUC": 0.9632804442469802, "Acc": 0.9504544039268925, "F1": 0.7875475630969895, "Se": 0.7214467609222902, "Sp": 0.9838558018267418, "epoch": 37, "train_loss": 0.08944052377773914}, {"AUC": 0.9607466521841616, "Acc": 0.9500189835357766, "F1": 0.7846398225626817, "Se": 0.7153098161686422, "Sp": 0.9842519645276574, "epoch": 38, "train_loss": 0.08786136240087217}, {"AUC": 0.9628002110915885, "Acc": 0.949908806311304, "F1": 0.7855767716108366, "Se": 0.7208789420565084, "Sp": 0.983313445241932, "epoch": 39, "train_loss": 0.08701791830389993}, {"AUC": 0.9580533102454141, "Acc": 0.9487230790215293, "F1": 0.778413235291317, "Se": 0.7075750152774436, "Sp": 0.9838951908524542, "epoch": 40, "train_loss": 0.08606000578583917}, {"AUC": 0.9602662946157701, "Acc": 0.9494350442460716, "F1": 0.7852551294948881, "Se": 0.7263095755380863, "Sp": 0.9819785107615363, "epoch": 41, "train_loss": 0.08495463560393546}, {"AUC": 0.9644933714354145, "Acc": 0.9501835883091387, "F1": 0.7875903150338711, "Se": 0.7255755657847586, "Sp": 0.9829432893977368, "epoch": 42, "train_loss": 0.08493871854443569}, {"AUC": 0.9609995382877765, "Acc": 0.9487753030259293, "F1": 0.782384433416929, "Se": 0.7234254711771335, "Sp": 0.9816431990554714, "epoch": 43, "train_loss": 0.08376440811844077}, {"AUC": 0.96258673751796, "Acc": 0.9493590219611855, "F1": 0.7875119735786114, "Se": 0.7372400887043862, "Sp": 0.9802971548498748, "epoch": 44, "train_loss": 0.0825823135819519}, {"AUC": 0.9622728530066407, "Acc": 0.9495126090121003, "F1": 0.7874317745980233, "Se": 0.7346520118618746, "Sp": 0.9808506211598856, "epoch": 45, "train_loss": 0.08134934980625985}, {"AUC": 0.9607515472451045, "Acc": 0.9487169090969588, "F1": 0.7829901905934131, "Se": 0.726834115526903, "Sp": 0.9810791280077688, "epoch": 46, "train_loss": 0.0803539512999123}, {"AUC": 0.9589405388040989, "Acc": 0.9479057843703912, "F1": 0.7788858949046046, "Se": 0.7208270074041503, "Sp": 0.9810258518255551, "epoch": 47, "train_loss": 0.07947962953039678}, {"AUC": 0.9623771615242711, "Acc": 0.9483198303799594, "F1": 0.7834518876356358, "Se": 0.7344563913379925, "Sp": 0.9795124042606806, "epoch": 48, "train_loss": 0.07857889906154014}, {"AUC": 0.9589923057933638, "Acc": 0.9476292395369648, "F1": 0.7790185420389735, "Se": 0.725212023218252, "Sp": 0.9800694054832554, "epoch": 49, "train_loss": 0.07779572838626336}, {"AUC": 0.9534291029666113, "Acc": 0.9461590346536017, "F1": 0.7677828085261681, "Se": 0.6992637397450701, "Sp": 0.982169396039989, "epoch": 50, "train_loss": 0.07691488686396042}, {"AUC": 0.9497919305562119, "Acc": 0.9450237685326355, "F1": 0.7603753469654331, "Se": 0.6852604263142497, "Sp": 0.9829109701971521, "epoch": 51, "train_loss": 0.0762023694042}, {"AUC": 0.9562783637218286, "Acc": 0.9459862767656286, "F1": 0.7706173218443295, "Se": 0.7127979101495892, "Sp": 0.9799974447632038, "epoch": 52, "train_loss": 0.07563005368865561}, {"AUC": 0.9569489439658223, "Acc": 0.9459045252650699, "F1": 0.76909662946712, "Se": 0.7077758292665616, "Sp": 0.9806362539622583, "epoch": 53, "train_loss": 0.07490321694785962}, {"AUC": 0.9515200967644897, "Acc": 0.9445938570027432, "F1": 0.7583090544350362, "Se": 0.6828541207549913, "Sp": 0.9827693212008402, "epoch": 54, "train_loss": 0.07434527884470299}, {"AUC": 0.9474761520526803, "Acc": 0.9430189837561311, "F1": 0.7484723802853891, "Se": 0.6660463360968338, "Sp": 0.9834162102000407, "epoch": 55, "train_loss": 0.0742275807497208}, {"AUC": 0.9587043064860885, "Acc": 0.9452595477930069, "F1": 0.7585206008892414, "Se": 0.6754291966228627, "Sp": 0.9846150505467247, "epoch": 56, "train_loss": 0.07402206653932808}, {"AUC": 0.9549184087743737, "Acc": 0.9437600357679341, "F1": 0.7543076187019818, "Se": 0.6782440547806713, "Sp": 0.9824862757019706, "epoch": 57, "train_loss": 0.07351766201463761}, {"AUC": 0.9518542303046378, "Acc": 0.9430489519611877, "F1": 0.7498964562890709, "Se": 0.6707602713758701, "Sp": 0.9827630088569759, "epoch": 58, "train_loss": 0.07256106317800004}, {"AUC": 0.9484243033523324, "Acc": 0.9416525658182212, "F1": 0.741719916387128, "Se": 0.6581955478153688, "Sp": 0.9829955556049321, "epoch": 59, "train_loss": 0.07252339436672628}, {"AUC": 0.948081514033513, "Acc": 0.9418973796109995, "F1": 0.7423424268541264, "Se": 0.6575688696769145, "Sp": 0.9833674789054093, "epoch": 60, "train_loss": 0.07231245697767008}, {"AUC": 0.9426156552754288, "Acc": 0.9417396058255546, "F1": 0.7388520687850024, "Se": 0.6474831601889729, "Sp": 0.9846577219912466, "epoch": 61, "train_loss": 0.0727356359566329}, {"AUC": 0.9526569211219352, "Acc": 0.9441117214684509, "F1": 0.754494530480917, "Se": 0.6746830687839848, "Sp": 0.9834086353874036, "epoch": 62, "train_loss": 0.07208813641045708}, {"AUC": 0.9467402220337083, "Acc": 0.9430632750003691, "F1": 0.7490235807317341, "Se": 0.6674814636569959, "Sp": 0.9832576441221726, "epoch": 63, "train_loss": 0.07100497878127499}, {"AUC": 0.9422181543246998, "Acc": 0.9424094833503484, "F1": 0.7483617527272027, "Se": 0.6727753358873642, "Sp": 0.9817363692509066, "epoch": 64, "train_loss": 0.06966311256110203}, {"AUC": 0.9448077305338024, "Acc": 0.943438097918025, "F1": 0.7538879577818601, "Se": 0.6805845764469427, "Sp": 0.9817760107703736, "epoch": 65, "train_loss": 0.06863828271161765}, {"AUC": 0.9433402100658641, "Acc": 0.9428568028817074, "F1": 0.750140671368559, "Se": 0.6739005866884561, "Sp": 0.982084810632209, "epoch": 66, "train_loss": 0.06765899430320133}, {"AUC": 0.9504777971910905, "Acc": 0.9442589182403464, "F1": 0.7616967920196626, "Se": 0.6998609882471881, "Sp": 0.9799050320490322, "epoch": 67, "train_loss": 0.06702783249784261}, {"AUC": 0.9566603103871493, "Acc": 0.9453573851683387, "F1": 0.7678983595939326, "Se": 0.7101353936386976, "Sp": 0.9796651629821936, "epoch": 68, "train_loss": 0.0665349735863856}, {"AUC": 0.9458352291190799, "Acc": 0.9429815234998103, "F1": 0.7527608710192147, "Se": 0.6819296839430173, "Sp": 0.9810566560636123, "epoch": 69, "train_loss": 0.06631393956195097}, {"AUC": 0.9478485106417355, "Acc": 0.9428832454155808, "F1": 0.7539797340136751, "Se": 0.6876009479805211, "Sp": 0.980116874309114, "epoch": 70, "train_loss": 0.06654428139154334}, {"AUC": 0.9484524416916726, "Acc": 0.9427572026707841, "F1": 0.7549389366121848, "Se": 0.69269573737685, "Sp": 0.979229358761811, "epoch": 71, "train_loss": 0.0671424311294686}, {"AUC": 0.9489092855508365, "Acc": 0.9437252197650008, "F1": 0.7602309972294228, "Se": 0.700891025518957, "Sp": 0.9791432583915037, "epoch": 72, "train_loss": 0.06734088495431934}, {"AUC": 0.9534794375525895, "Acc": 0.9449204222960801, "F1": 0.7673733163208801, "Se": 0.713710228876013, "Sp": 0.9786430682637065, "epoch": 73, "train_loss": 0.06667552683211397}, {"AUC": 0.9519249132095673, "Acc": 0.9446491659694285, "F1": 0.7649019886789062, "Se": 0.7074001686145046, "Sp": 0.9792525881872312, "epoch": 74, "train_loss": 0.06589085939049255}, {"AUC": 0.9522978297810629, "Acc": 0.9441181117474703, "F1": 0.7570699726607927, "Se": 0.6840849720158781, "Sp": 0.9820446641252328, "epoch": 75, "train_loss": 0.0649290900764754}, {"AUC": 0.9421362381660533, "Acc": 0.9409668227731034, "F1": 0.7384951471947633, "Se": 0.6548596119789006, "Sp": 0.9826963505057702, "epoch": 76, "train_loss": 0.06395909738785122}, {"AUC": 0.9500320840845411, "Acc": 0.9425368482218388, "F1": 0.7478222524794603, "Se": 0.6693684226926733, "Sp": 0.9823792183500342, "epoch": 77, "train_loss": 0.0627896073856391}, {"AUC": 0.9413897503062569, "Acc": 0.9396424925349421, "F1": 0.7339985530257784, "Se": 0.6542242780650533, "Sp": 0.9812715282487487, "epoch": 78, "train_loss": 0.06229286375310039}, {"AUC": 0.9427092347909837, "Acc": 0.9407004142443286, "F1": 0.7386906079708541, "Se": 0.6584811884033384, "Sp": 0.9818628686219446, "epoch": 79, "train_loss": 0.06177047605160624}, {"AUC": 0.9419411623792115, "Acc": 0.9407722497946848, "F1": 0.7409909996723649, "Se": 0.6655910423111613, "Sp": 0.9809081897359269, "epoch": 80, "train_loss": 0.06137040835892549}, {"AUC": 0.9403984934108548, "Acc": 0.9409657210008587, "F1": 0.7423425814790878, "Se": 0.668113335260686, "Sp": 0.9807619958520326, "epoch": 81, "train_loss": 0.06123850898438832}, {"AUC": 0.939101873140435, "Acc": 0.9401797166814708, "F1": 0.737955112989742, "Se": 0.6617392222612694, "Sp": 0.9807910326338078, "epoch": 82, "train_loss": 0.061148289816628676}, {"AUC": 0.940672450576572, "Acc": 0.9410509981726005, "F1": 0.7446233915996132, "Se": 0.675174716826308, "Sp": 0.9798297889101714, "epoch": 83, "train_loss": 0.06174320988066029}, {"AUC": 0.9480079997081545, "Acc": 0.9420317958248561, "F1": 0.7539990536554895, "Se": 0.6979238257142313, "Sp": 0.9776356181829843, "epoch": 84, "train_loss": 0.06204301407706225}, {"AUC": 0.9487977659942597, "Acc": 0.9419800125293539, "F1": 0.7562733668974314, "Se": 0.7071924300050723, "Sp": 0.9762244305887093, "epoch": 85, "train_loss": 0.062097644127788953}, {"AUC": 0.9461476205192301, "Acc": 0.9414326520781738, "F1": 0.7521561511268682, "Se": 0.6981834989760217, "Sp": 0.9769112136011315, "epoch": 86, "train_loss": 0.061728188302367926}, {"AUC": 0.9479314814736257, "Acc": 0.9422343015634369, "F1": 0.7570631730830715, "Se": 0.7071197214917709, "Sp": 0.9765264131191715, "epoch": 87, "train_loss": 0.060510003480885644}, {"AUC": 0.9495883294781586, "Acc": 0.9424418754543433, "F1": 0.7582224830403911, "Se": 0.7090413036290204, "Sp": 0.9764839941684043, "epoch": 88, "train_loss": 0.059154062408197206}, {"AUC": 0.9509409247330886, "Acc": 0.9426454829651688, "F1": 0.7580174168182836, "Se": 0.7057434532042814, "Sp": 0.9771982990000743, "epoch": 89, "train_loss": 0.05839901314902818}, {"AUC": 0.9521548993973814, "Acc": 0.9429824049176062, "F1": 0.7591623913804273, "Se": 0.7059979330008361, "Sp": 0.9775472453688858, "epoch": 90, "train_loss": 0.05777570871578064}, {"AUC": 0.9502188073204673, "Acc": 0.9421274296556984, "F1": 0.7531342997385029, "Se": 0.6935353475899725, "Sp": 0.9783852721402936, "epoch": 91, "train_loss": 0.05734416031918954}, {"AUC": 0.9499214608279252, "Acc": 0.9426434997751283, "F1": 0.7570076008640825, "Se": 0.701898557774704, "Sp": 0.9777568151851764, "epoch": 92, "train_loss": 0.05703207061014837}, {"AUC": 0.9492981236981662, "Acc": 0.9422651511862892, "F1": 0.754495068987327, "Se": 0.6969768838862355, "Sp": 0.9780411231528188, "epoch": 93, "train_loss": 0.05694433658209164}, {"AUC": 0.9478859816998876, "Acc": 0.9421800943689963, "F1": 0.7566620143464572, "Se": 0.7062420258669192, "Sp": 0.9765923139891135, "epoch": 94, "train_loss": 0.05709935365302954}, {"AUC": 0.9497698356584651, "Acc": 0.9434812873900184, "F1": 0.7619794431308208, "Se": 0.710730910985737, "Sp": 0.9774285733042393, "epoch": 95, "train_loss": 0.0577225906890817}, {"AUC": 0.9478404005503728, "Acc": 0.9426122094433781, "F1": 0.7587528669831001, "Se": 0.7089928312868196, "Sp": 0.9766862416658124, "epoch": 96, "train_loss": 0.05814809357980266}, {"AUC": 0.9519155581172742, "Acc": 0.94313621232297, "F1": 0.7581031906576853, "Se": 0.7000323725999699, "Sp": 0.9785935794878113, "epoch": 97, "train_loss": 0.058532755690976046}, {"AUC": 0.9537214797379094, "Acc": 0.9429691836506694, "F1": 0.7547897729748986, "Se": 0.6895744647701286, "Sp": 0.9799275039931887, "epoch": 98, "train_loss": 0.05790874683589209}, {"AUC": 0.9550406313392157, "Acc": 0.9424317391496918, "F1": 0.7507810361093861, "Se": 0.6812389530666547, "Sp": 0.9805274291540399, "epoch": 99, "train_loss": 0.05685807580448454}, {"AUC": 0.9551931508337921, "Acc": 0.9422323183733964, "F1": 0.7500109661879052, "Se": 0.6807940462114537, "Sp": 0.9803638132010805, "epoch": 100, "train_loss": 0.0557072621450061}, {"AUC": 0.9541744137558781, "Acc": 0.9413453917163915, "F1": 0.7457463280349291, "Se": 0.6757875457241335, "Sp": 0.9800777377771561, "epoch": 101, "train_loss": 0.054799128462036606}, {"AUC": 0.9547796671851891, "Acc": 0.9422792538710217, "F1": 0.7513325960347258, "Se": 0.6850613434802103, "Sp": 0.9797951972657957, "epoch": 102, "train_loss": 0.05438462403981248}, {"AUC": 0.9492157949338937, "Acc": 0.9420712392712173, "F1": 0.7509216474157395, "Se": 0.6860204033937564, "Sp": 0.9794169616214543, "epoch": 103, "train_loss": 0.05425858406670159}, {"AUC": 0.9529001132011661, "Acc": 0.9431108715613413, "F1": 0.7576494045221956, "Se": 0.6986145565905939, "Sp": 0.9787713350910265, "epoch": 104, "train_loss": 0.05425490401830757}, {"AUC": 0.9511002803272707, "Acc": 0.9429605898271606, "F1": 0.7560230090680913, "Se": 0.6942970558245578, "Sp": 0.9792288537743019, "epoch": 105, "train_loss": 0.05453294672770426}, {"AUC": 0.9545574626251131, "Acc": 0.9440235796888727, "F1": 0.7607582908037133, "Se": 0.6991962246970046, "Sp": 0.9797323263209085, "epoch": 106, "train_loss": 0.05480132702359697}, {"AUC": 0.9492146146556628, "Acc": 0.9423475637501947, "F1": 0.7481244229826898, "Se": 0.6726506927217047, "Sp": 0.9816835980562021, "epoch": 107, "train_loss": 0.05458247522255988}, {"AUC": 0.9534874036680618, "Acc": 0.9430709874060822, "F1": 0.7512808910881558, "Se": 0.6754776689650636, "Sp": 0.9821002127512376, "epoch": 108, "train_loss": 0.05412603138029226}, {"AUC": 0.9508995019832601, "Acc": 0.9426249900014169, "F1": 0.7474426698274809, "Se": 0.6669984713900656, "Sp": 0.9828258798018631, "epoch": 109, "train_loss": 0.053804320086783264}, {"AUC": 0.9534014354339773, "Acc": 0.9427536769996009, "F1": 0.7480008225630599, "Se": 0.6674745390366814, "Sp": 0.9829039003720244, "epoch": 110, "train_loss": 0.053284754780179355}, {"AUC": 0.95218382661202, "Acc": 0.942773508900006, "F1": 0.749593103980253, "Se": 0.6729155594487309, "Sp": 0.9821330369393313, "epoch": 111, "train_loss": 0.05290911384508945}, {"AUC": 0.951141826572395, "Acc": 0.9415357779602802, "F1": 0.7396978042192818, "Se": 0.6526056480665594, "Sp": 0.9836770362485084, "epoch": 112, "train_loss": 0.052688717736600665}, {"AUC": 0.9532523470758247, "Acc": 0.9424841835085408, "F1": 0.7479584358098615, "Se": 0.6704659750125076, "Sp": 0.9821587913022971, "epoch": 113, "train_loss": 0.052528492098645074}, {"AUC": 0.9547849709178052, "Acc": 0.942882363997785, "F1": 0.7521949951052374, "Se": 0.6810433325427725, "Sp": 0.9810723106763954, "epoch": 114, "train_loss": 0.05224520326737547}, {"AUC": 0.9513419836475954, "Acc": 0.9426236678747232, "F1": 0.7527983002284211, "Se": 0.6863475917036124, "Sp": 0.9800022421445406, "epoch": 115, "train_loss": 0.05181461930988007}, {"AUC": 0.9531530226466702, "Acc": 0.9425809191116278, "F1": 0.7568446237743132, "Se": 0.702042243646228, "Sp": 0.9776641499772503, "epoch": 116, "train_loss": 0.051614308042189805}, {"AUC": 0.9480747340799346, "Acc": 0.9414853167914717, "F1": 0.7487368146154807, "Se": 0.6849349691594723, "Sp": 0.9789038943121742, "epoch": 117, "train_loss": 0.05139525643971865}, {"AUC": 0.9546298466858916, "Acc": 0.9430037792991539, "F1": 0.7569435765397934, "Se": 0.6972469440784975, "Sp": 0.9788480931924148, "epoch": 118, "train_loss": 0.05111950254649855}, {"AUC": 0.9504919991761367, "Acc": 0.9426119890889291, "F1": 0.7522759678154228, "Se": 0.6845645019726512, "Sp": 0.9802489285427525, "epoch": 119, "train_loss": 0.05108590983218164}, {"AUC": 0.949735754239875, "Acc": 0.9425335429051046, "F1": 0.7510878352388942, "Se": 0.6811506641576459, "Sp": 0.9806569584501328, "epoch": 120, "train_loss": 0.05101310415921034}, {"AUC": 0.9526931384300461, "Acc": 0.9418513255311699, "F1": 0.7452820809326668, "Se": 0.6683210738701184, "Sp": 0.9817464690010893, "epoch": 121, "train_loss": 0.051136847301677335}, {"AUC": 0.9486187123516908, "Acc": 0.9406157981359335, "F1": 0.7391687281990531, "Se": 0.6610571471602997, "Sp": 0.9813902003133953, "epoch": 122, "train_loss": 0.05115438744178391}, {"AUC": 0.9514122766488654, "Acc": 0.9413092535867644, "F1": 0.7427814298365314, "Se": 0.6657520397334714, "Sp": 0.9815000350966319, "epoch": 123, "train_loss": 0.05085302865700214}, {"AUC": 0.9518056746373866, "Acc": 0.9416519047548744, "F1": 0.7436788997219878, "Se": 0.6649851380336502, "Sp": 0.9820045176182567, "epoch": 124, "train_loss": 0.050445812063117046}, {"AUC": 0.9549907309040289, "Acc": 0.942624549292519, "F1": 0.7492517363184271, "Se": 0.6734418305926263, "Sp": 0.9818855930598557, "epoch": 125, "train_loss": 0.05033674356309348}, {"AUC": 0.9495261398143102, "Acc": 0.9414209732923797, "F1": 0.7414561086148879, "Se": 0.6598990044127143, "Sp": 0.9824817308143883, "epoch": 126, "train_loss": 0.04978274885797873}, {"AUC": 0.9487258436840103, "Acc": 0.9419496036153995, "F1": 0.7469261694677535, "Se": 0.673007310667897, "Sp": 0.9811755806220133, "epoch": 127, "train_loss": 0.04937689072903595}, {"AUC": 0.9411214566525732, "Acc": 0.9410877973655745, "F1": 0.7405513255219504, "Se": 0.6605308760164045, "Sp": 0.9820078000370661, "epoch": 128, "train_loss": 0.049097648061433574}, {"AUC": 0.9486092652958246, "Acc": 0.9420463392184865, "F1": 0.7474417872150819, "Se": 0.67372227771536, "Sp": 0.981182145459632, "epoch": 129, "train_loss": 0.0487838799963356}, {"AUC": 0.9529277104924204, "Acc": 0.942709165400914, "F1": 0.7517473570031777, "Se": 0.6814709278471874, "Sp": 0.9808114846279278, "epoch": 130, "train_loss": 0.04837417054295656}, {"AUC": 0.9488392582919991, "Acc": 0.9417805917530585, "F1": 0.7461203326280266, "Se": 0.6720984542516303, "Sp": 0.9811144771334082, "epoch": 131, "train_loss": 0.04811674982556724}, {"AUC": 0.9480462783731204, "Acc": 0.9412391808719999, "F1": 0.7430668566699137, "Se": 0.6675437852398256, "Sp": 0.9811584110467028, "epoch": 132, "train_loss": 0.048044830073195044}, {"AUC": 0.9534071507434906, "Acc": 0.9426020731387266, "F1": 0.7545845801331093, "Se": 0.6932445135367671, "Sp": 0.9789715626383981, "epoch": 133, "train_loss": 0.048054247978143394}, {"AUC": 0.9466450095512536, "Acc": 0.9400843032050775, "F1": 0.7372726429460372, "Se": 0.6604616298132603, "Sp": 0.9808680432289507, "epoch": 134, "train_loss": 0.04792808858474018}, {"AUC": 0.9468391403801674, "Acc": 0.9404097667261697, "F1": 0.7395546515424243, "Se": 0.6646804547398161, "Sp": 0.9806256492245664, "epoch": 135, "train_loss": 0.047896031246636994}, {"AUC": 0.9512107728075002, "Acc": 0.941814746692645, "F1": 0.7477379791180435, "Se": 0.6774771530808501, "Sp": 0.9803691155699263, "epoch": 136, "train_loss": 0.04799758406079491}, {"AUC": 0.9476423305139628, "Acc": 0.9416552100716086, "F1": 0.7441874395556514, "Se": 0.6667249488876463, "Sp": 0.9817545488012354, "epoch": 137, "train_loss": 0.04818958166288212}, {"AUC": 0.9424821487348889, "Acc": 0.9412286038584504, "F1": 0.7436396019542802, "Se": 0.6696713748314288, "Sp": 0.9808359765221207, "epoch": 138, "train_loss": 0.048004903583205305}, {"AUC": 0.9414936741738031, "Acc": 0.9409663820642056, "F1": 0.742157250555092, "Se": 0.667458958640974, "Sp": 0.9808581959725227, "epoch": 139, "train_loss": 0.04749054493731819}, {"AUC": 0.9443208109567413, "Acc": 0.9414463140540085, "F1": 0.7456780339899908, "Se": 0.6743818478003079, "Sp": 0.9803984048454562, "epoch": 140, "train_loss": 0.04689035173578304}, {"AUC": 0.9446473226984338, "Acc": 0.9418581565190872, "F1": 0.7507462799362167, "Se": 0.6878987066540407, "Sp": 0.9788988444370829, "epoch": 141, "train_loss": 0.04634013065879117}, {"AUC": 0.9429872911718187, "Acc": 0.9414608574476389, "F1": 0.7471761104031627, "Se": 0.6795718507259599, "Sp": 0.9796580931570658, "epoch": 142, "train_loss": 0.04580729675581097}, {"AUC": 0.9435488478315254, "Acc": 0.9416115798907174, "F1": 0.7474810044914503, "Se": 0.6789174741062479, "Sp": 0.9799262415244159, "epoch": 143, "train_loss": 0.04548102744593052}, {"AUC": 0.9466142187614135, "Acc": 0.9420154895956342, "F1": 0.7505309023063913, "Se": 0.6852483082286994, "Sp": 0.9794656929160858, "epoch": 144, "train_loss": 0.04553042606494273}, {"AUC": 0.9425947794145251, "Acc": 0.9412656234058733, "F1": 0.7445749304048259, "Se": 0.67254509226191, "Sp": 0.9804592558403068, "epoch": 145, "train_loss": 0.0455530197104963}, {"AUC": 0.9471882435491179, "Acc": 0.9418808530273286, "F1": 0.7514884611869436, "Se": 0.6903656026410502, "Sp": 0.9785650476935454, "epoch": 146, "train_loss": 0.04547396383713931}, {"AUC": 0.9425842340176673, "Acc": 0.9407484515141986, "F1": 0.7463172930146025, "Se": 0.6847254993949613, "Sp": 0.9780901069412048, "epoch": 147, "train_loss": 0.04547594087125617}, {"AUC": 0.9447016743258163, "Acc": 0.9406409185431134, "F1": 0.7453562346980253, "Se": 0.6824992339638777, "Sp": 0.9782915969573492, "epoch": 148, "train_loss": 0.04573641487877467}, {"AUC": 0.9453357516650446, "Acc": 0.9412252985417163, "F1": 0.7490332159706136, "Se": 0.6890637740219406, "Sp": 0.9780037540771429, "epoch": 149, "train_loss": 0.0457748150183761}, {"AUC": 0.9367730321404635, "Acc": 0.9400710819381408, "F1": 0.7392624038409915, "Se": 0.6674451094003452, "Sp": 0.9798343337977535, "epoch": 150, "train_loss": 0.04567456490258337}, {"AUC": 0.9439915299220037, "Acc": 0.9408013365819455, "F1": 0.7419680778517765, "Se": 0.6686638425756818, "Sp": 0.9804933424971733, "epoch": 151, "train_loss": 0.045277939265361056}, {"AUC": 0.9464081190692027, "Acc": 0.9411261390396909, "F1": 0.7423856742298895, "Se": 0.6664479640750698, "Sp": 0.9811887102972507, "epoch": 152, "train_loss": 0.04497162340703653}, {"AUC": 0.9455111011378313, "Acc": 0.9409824679389786, "F1": 0.741966997055786, "Se": 0.6666141549626157, "Sp": 0.9809998449688347, "epoch": 153, "train_loss": 0.04466027920352644}, {"AUC": 0.9471838371607083, "Acc": 0.9412896420408083, "F1": 0.7447256171171689, "Se": 0.6728030343686218, "Sp": 0.9804491560901241, "epoch": 154, "train_loss": 0.0444633157858334}, {"AUC": 0.9458287205441955, "Acc": 0.9413011004721534, "F1": 0.7456269850212659, "Se": 0.675872372322985, "Sp": 0.9800146143385143, "epoch": 155, "train_loss": 0.04422696973779239}, {"AUC": 0.942294498167328, "Acc": 0.9408941058049515, "F1": 0.7411524813968816, "Se": 0.664780861734375, "Sp": 0.9811659858593398, "epoch": 156, "train_loss": 0.044051342625607504}, {"AUC": 0.9407770609931565, "Acc": 0.940222906153464, "F1": 0.7395521607098453, "Se": 0.6667561096790612, "Sp": 0.9801087945089678, "epoch": 157, "train_loss": 0.04370252154330956}, {"AUC": 0.9351887066661584, "Acc": 0.9392771448585908, "F1": 0.7337186279748646, "Se": 0.6572416813670585, "Sp": 0.9804127969894665, "epoch": 158, "train_loss": 0.043565796160692116}, {"AUC": 0.9357096610486237, "Acc": 0.9397055139073405, "F1": 0.7361025248321617, "Se": 0.6606399387863564, "Sp": 0.9804079996081297, "epoch": 159, "train_loss": 0.043640273754135706}, {"AUC": 0.9341778566867814, "Acc": 0.9392315314876591, "F1": 0.7324371104573997, "Se": 0.6534417959695248, "Sp": 0.9809147545735456, "epoch": 160, "train_loss": 0.0438191422035743}, {"AUC": 0.9381011961885388, "Acc": 0.9392412270834127, "F1": 0.7315567705656028, "Se": 0.6504122745819694, "Sp": 0.9813677283692388, "epoch": 161, "train_loss": 0.04364142941267346}, {"AUC": 0.9359740801442955, "Acc": 0.9386427444000773, "F1": 0.7286462718682758, "Se": 0.6471888638256104, "Sp": 0.9811520987028386, "epoch": 162, "train_loss": 0.04347212105494691}, {"AUC": 0.9421100471511763, "Acc": 0.9404262933098406, "F1": 0.7384755872241386, "Se": 0.6607888181231163, "Sp": 0.9812121922164255, "epoch": 163, "train_loss": 0.04319809700973565}, {"AUC": 0.9446048191034309, "Acc": 0.9413453917163915, "F1": 0.7439679044906589, "Se": 0.6694930658583327, "Sp": 0.9809958050687616, "epoch": 164, "train_loss": 0.04292988446468371}, {"AUC": 0.9454516633466116, "Acc": 0.9412647419880775, "F1": 0.7415610719995811, "Se": 0.6620214005390817, "Sp": 0.9819931553993012, "epoch": 165, "train_loss": 0.042697444008808816}, {"AUC": 0.9456835183240815, "Acc": 0.9409046828185009, "F1": 0.7385908941596412, "Se": 0.6558740688549621, "Sp": 0.9824771859268061, "epoch": 166, "train_loss": 0.04211894475520239}, {"AUC": 0.9414821327624321, "Acc": 0.9399836012219095, "F1": 0.7318726084050258, "Se": 0.6434997723531072, "Sp": 0.983226587390361, "epoch": 167, "train_loss": 0.04186838513487601}, {"AUC": 0.9482612435588633, "Acc": 0.9411794648163356, "F1": 0.7403553413054601, "Se": 0.6588308817292162, "Sp": 0.9823607863059507, "epoch": 168, "train_loss": 0.04161784775351407}, {"AUC": 0.9440659637003824, "Acc": 0.940166715768983, "F1": 0.7363116729756658, "Se": 0.6562930083839841, "Sp": 0.9815704808541561, "epoch": 169, "train_loss": 0.041454791418800596}, {"AUC": 0.9360865392054678, "Acc": 0.938329620728126, "F1": 0.7277165447790018, "Se": 0.647443343622165, "Sp": 0.9807561884956776, "epoch": 170, "train_loss": 0.04124603264426696}, {"AUC": 0.9342729129928473, "Acc": 0.937918880035292, "F1": 0.7269518427380315, "Se": 0.6492472072140695, "Sp": 0.9800224416449059, "epoch": 171, "train_loss": 0.040954689313366544}, {"AUC": 0.9335498448387322, "Acc": 0.9379292366943924, "F1": 0.7266431822372316, "Se": 0.6481306121883704, "Sp": 0.9801971673230663, "epoch": 172, "train_loss": 0.040983301634696545}, {"AUC": 0.9392459229670486, "Acc": 0.9393785079051057, "F1": 0.732627425444756, "Se": 0.6524948541415289, "Sp": 0.98122128199159, "epoch": 173, "train_loss": 0.04106125099497149}, {"AUC": 0.9380108446780165, "Acc": 0.9398181150307515, "F1": 0.7338692703461178, "Se": 0.6518889498640178, "Sp": 0.9818133798460495, "epoch": 174, "train_loss": 0.04109259363031015}, {"AUC": 0.9427837332487885, "Acc": 0.940980705103387, "F1": 0.7414920682719295, "Se": 0.6649834068785716, "Sp": 0.9812356741356003, "epoch": 175, "train_loss": 0.04136644274694845}, {"AUC": 0.9369949727004105, "Acc": 0.939981618031869, "F1": 0.7356494529982219, "Se": 0.6560835386194731, "Sp": 0.9813889378446224, "epoch": 176, "train_loss": 0.041226969406125136}, {"AUC": 0.9399397269285158, "Acc": 0.9404011729026609, "F1": 0.7384751052991889, "Se": 0.6610658029356928, "Sp": 0.9811430089276741, "epoch": 177, "train_loss": 0.04084948787567555}, {"AUC": 0.941956096664728, "Acc": 0.9409130562875608, "F1": 0.7425942262851569, "Se": 0.6695900105427345, "Sp": 0.9804862726720455, "epoch": 178, "train_loss": 0.040348002661630744}, {"AUC": 0.9461581854315526, "Acc": 0.9416305303733267, "F1": 0.7460985837866334, "Se": 0.6737534385067748, "Sp": 0.980701144857182, "epoch": 179, "train_loss": 0.03988986575495801}, {"AUC": 0.9422884670348539, "Acc": 0.9405267749385596, "F1": 0.7396947683951036, "Se": 0.6638581560774796, "Sp": 0.9808796579416608, "epoch": 180, "train_loss": 0.039590766336914385}, {"AUC": 0.9350098074373488, "Acc": 0.9393432511932744, "F1": 0.7323194751976226, "Se": 0.65184913329721, "Sp": 0.9812750631613127, "epoch": 181, "train_loss": 0.039409854896803154}, {"AUC": 0.9382311746941567, "Acc": 0.9395523675653236, "F1": 0.7355911030917104, "Se": 0.6605776172035267, "Sp": 0.98024160622387, "epoch": 182, "train_loss": 0.03951186076301383}, {"AUC": 0.9395689603499797, "Acc": 0.939264143946103, "F1": 0.7352444513604325, "Se": 0.6625459405278984, "Sp": 0.9796242589939538, "epoch": 183, "train_loss": 0.03939809269650141}, {"AUC": 0.9409905204084896, "Acc": 0.9400283331750454, "F1": 0.7387814021879553, "Se": 0.6662575370164234, "Sp": 0.9799585607250004, "epoch": 184, "train_loss": 0.03923432006195071}, {"AUC": 0.9422500041774191, "Acc": 0.940783047162683, "F1": 0.7421298433117463, "Se": 0.6694359377407387, "Sp": 0.9803597733010074, "epoch": 185, "train_loss": 0.039111926256737206}, {"AUC": 0.943606286647451, "Acc": 0.9409963502692621, "F1": 0.7432892742474372, "Se": 0.6710839973755689, "Sp": 0.9803638132010805, "epoch": 186, "train_loss": 0.03905279785976745}, {"AUC": 0.944184070482921, "Acc": 0.9415432700115444, "F1": 0.7469700018980707, "Se": 0.6778753187489288, "Sp": 0.9799999697007494, "epoch": 187, "train_loss": 0.039035337747918675}, {"AUC": 0.939052401998701, "Acc": 0.9408438649905919, "F1": 0.7425478516964228, "Se": 0.6702114952159529, "Sp": 0.9803163443752219, "epoch": 188, "train_loss": 0.03907502871516044}, {"AUC": 0.9384664352419483, "Acc": 0.9406345282640939, "F1": 0.7412815068552349, "Se": 0.6681496895173367, "Sp": 0.9803771953700725, "epoch": 189, "train_loss": 0.03878447062743362}, {"AUC": 0.938447860661364, "Acc": 0.9406532583922542, "F1": 0.7411197471600686, "Se": 0.6673758631972011, "Sp": 0.9805115220475021, "epoch": 190, "train_loss": 0.03845117305172607}, {"AUC": 0.9357929405856429, "Acc": 0.9401724449846556, "F1": 0.7385634886703719, "Se": 0.6639066284196805, "Sp": 0.9804665781591893, "epoch": 191, "train_loss": 0.038280097342067165}, {"AUC": 0.9410525518594733, "Acc": 0.9407799622003978, "F1": 0.7418687141796485, "Se": 0.668558242115887, "Sp": 0.9804842527220089, "epoch": 192, "train_loss": 0.03771939215585007}, {"AUC": 0.9467170119340488, "Acc": 0.9417177907351091, "F1": 0.7458887164878873, "Se": 0.6720015095672286, "Sp": 0.9810566560636123, "epoch": 193, "train_loss": 0.037229294091957854}, {"AUC": 0.9444652371955239, "Acc": 0.9407235514614678, "F1": 0.7395096481315249, "Se": 0.6610259863688849, "Sp": 0.9815182146469608, "epoch": 194, "train_loss": 0.03700884597856202}, {"AUC": 0.9393836490002474, "Acc": 0.940231499976973, "F1": 0.7364072442867083, "Se": 0.655905229646377, "Sp": 0.9817012726190217, "epoch": 195, "train_loss": 0.03712298046229989}, {"AUC": 0.93873108493871, "Acc": 0.9401268316137239, "F1": 0.7367481768479307, "Se": 0.6582093970559977, "Sp": 0.9812452688982738, "epoch": 196, "train_loss": 0.03697849634045269}, {"AUC": 0.9393195971254047, "Acc": 0.9402074813420379, "F1": 0.7394124013602371, "Se": 0.6664445017649127, "Sp": 0.9801365688219702, "epoch": 197, "train_loss": 0.036904962682456244}, {"AUC": 0.9438368880617426, "Acc": 0.9411012389869601, "F1": 0.7444458360860748, "Se": 0.6739698328916003, "Sp": 0.9800630931393912, "epoch": 198, "train_loss": 0.03691237650127732}, {"AUC": 0.9438324481613022, "Acc": 0.9410609141228031, "F1": 0.7446743924091717, "Se": 0.6752422318743735, "Sp": 0.9798313038726987, "epoch": 199, "train_loss": 0.03684015689941589}, {"AUC": 0.9389222789410873, "Acc": 0.9405267749385596, "F1": 0.7414314400239123, "Se": 0.6698860380611755, "Sp": 0.9800004746882586, "epoch": 200, "train_loss": 0.03682654538715724}]}, {"name": "unet_drive_real_smoke", "metrics": [{"AUC": 0.507739263997807, "Acc": 0.8727124729211927, "F1": 0.0, "Se": 0.0, "Sp": 1.0, "epoch": 1, "train_loss": 0.6291592493653297}, {"AUC": 0.9817, "Acc": 0.9693, "F1": 0.8271, "Se": 0.8146, "Sp": 0.9836, "epoch": 2, "train_loss": 0.6022860258817673}]}], "paperDrive": {"Se": 0.8144, "Sp": 0.9835, "F1": 0.827, "Acc": 0.9692, "AUC": 0.9816}, "paperStare": {"Se": 0.8253, "Sp": 0.9862, "F1": 0.8269, "Acc": 0.9747, "AUC": 0.9898}, "paperChase": {"Se": 0.8412, "Sp": 0.9797, "F1": 0.8225, "Acc": 0.9698, "AUC": 0.9894}, "bestSingle": {"epoch": 8, "train_loss": 0.11986171087482944, "train_sec": 334.34, "Se": 0.8148, "Sp": 0.9838, "F1": 0.8273, "Acc": 0.9695, "AUC": 0.9819}, "ensembleDrive": {"threshold": 0.35, "Se": 0.8154, "Sp": 0.9841, "F1": 0.8276, "Acc": 0.9699, "AUC": 0.9821}, "ensembleStare": {"threshold": 0.45, "Se": 0.8257, "Sp": 0.9866, "F1": 0.8272, "Acc": 0.9750, "AUC": 0.9901}, "ensembleChase": {"threshold": 0.45, "Se": 0.8416, "Sp": 0.9801, "F1": 0.8228, "Acc": 0.9701, "AUC": 0.9897}};
+
+// D3 v7 via CDN; falls back gracefully if offline.
+const PALETTE = ["#76b5ff","#7dd38a","#ffb85c","#e07bff","#ff8066","#5ce0d8"];
+
+function waitForD3(callback, tries=40) {
+  if (window.d3) return callback(window.d3);
+  if (tries <= 0) {
+    document.querySelectorAll(".chart").forEach(c => {
+      c.innerHTML = "<div class='title'>chart</div><p class='muted' style='font-size:12px;'>D3 didn't load (offline?). Rebuild report with internet connected for interactive charts.</p>";
+    });
+    return;
+  }
+  setTimeout(() => waitForD3(callback, tries-1), 100);
+}
+
+function lineChart(selector, data, options) {
+  const d3 = window.d3;
+  const opts = Object.assign({
+    metric: "AUC", yLabel: "val AUC", yMin: null, yMax: null,
+    paperRef: null, height: 320,
+  }, options || {});
+  const root = document.querySelector(selector);
+  if (!root) return;
+  const width = root.clientWidth - 24;
+  const height = opts.height;
+  const margin = {top: 18, right: 18, bottom: 30, left: 52};
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+
+  const svg = d3.select(selector).append("svg")
+    .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("width", "100%").attr("height", "auto");
+  const g = svg.append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  const series = data.experiments.map((e, i) => ({
+    name: e.name,
+    color: PALETTE[i % PALETTE.length],
+    points: e.metrics
+      .filter(r => r[opts.metric] != null)
+      .map(r => ({x: r.epoch, y: r[opts.metric]})),
+  })).filter(s => s.points.length > 0);
+
+  if (series.length === 0) {
+    g.append("text").attr("x", innerW/2).attr("y", innerH/2)
+      .attr("text-anchor", "middle").attr("fill", "#8790a3")
+      .text(`no ${opts.metric} yet`);
+    return;
+  }
+
+  const xExtent = d3.extent(series.flatMap(s => s.points.map(p => p.x)));
+  if (xExtent[0] === xExtent[1]) xExtent[1] = xExtent[0] + 1;
+  const yValues = series.flatMap(s => s.points.map(p => p.y));
+  let yLo = opts.yMin != null ? opts.yMin : d3.min(yValues);
+  let yHi = opts.yMax != null ? opts.yMax : d3.max(yValues);
+  if (opts.paperRef != null) { yHi = Math.max(yHi, opts.paperRef + 0.005); yLo = Math.min(yLo, opts.paperRef - 0.005); }
+  const pad = (yHi - yLo) * 0.08 || 0.01;
+  yLo -= pad; yHi += pad;
+
+  const x = d3.scaleLinear().domain(xExtent).range([0, innerW]);
+  const y = d3.scaleLinear().domain([yLo, yHi]).range([innerH, 0]);
+
+  g.selectAll(".gridline-h").data(y.ticks(5)).enter()
+    .append("line").attr("class", "gridline")
+    .attr("x1", 0).attr("x2", innerW)
+    .attr("y1", d => y(d)).attr("y2", d => y(d));
+  g.append("g").attr("class", "axis")
+    .attr("transform", `translate(0,${innerH})`)
+    .call(d3.axisBottom(x).ticks(6).tickSizeOuter(0));
+  g.append("g").attr("class", "axis")
+    .call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".3f")).tickSizeOuter(0));
+  g.append("text").attr("x", -margin.left + 8).attr("y", -6)
+    .attr("fill", "#8790a3").attr("font-size", 11).text(opts.yLabel);
+
+  if (opts.paperRef != null) {
+    g.append("line").attr("class", "paper-ref")
+      .attr("x1", 0).attr("x2", innerW)
+      .attr("y1", y(opts.paperRef)).attr("y2", y(opts.paperRef));
+    g.append("text").attr("class", "paper-ref-label")
+      .attr("x", innerW - 6).attr("y", y(opts.paperRef) - 4)
+      .attr("text-anchor", "end")
+      .text(`paper = ${opts.paperRef.toFixed(4)}`);
+  }
+
+  const line = d3.line().x(d => x(d.x)).y(d => y(d.y))
+    .curve(d3.curveMonotoneX);
+
+  const seriesG = g.append("g");
+  series.forEach((s, idx) => {
+    const grp = seriesG.append("g").attr("data-series", s.name);
+    grp.append("path").attr("class", "series-path")
+      .attr("d", line(s.points)).attr("stroke", s.color);
+    grp.selectAll(".series-dot").data(s.points).enter()
+      .append("circle").attr("class", "series-dot")
+      .attr("cx", d => x(d.x)).attr("cy", d => y(d.y)).attr("r", 3)
+      .attr("fill", s.color);
+  });
+
+  const tooltip = d3.select(root).append("div").attr("class", "tooltip");
+  const hoverLine = g.append("line").attr("class", "hover-line")
+    .attr("y1", 0).attr("y2", innerH);
+  const focusDots = series.map(s =>
+    g.append("circle").attr("class", "focus-dot").attr("r", 4).attr("stroke", s.color).attr("fill", s.color));
+
+  const overlay = g.append("rect").attr("width", innerW).attr("height", innerH)
+    .attr("fill", "transparent");
+  overlay.on("mousemove", function(event) {
+    const [mx] = d3.pointer(event, this);
+    const xVal = x.invert(mx);
+    const nearest = Math.round(xVal);
+    const rows = [];
+    series.forEach((s, i) => {
+      const pt = s.points.reduce((best, p) =>
+        Math.abs(p.x - xVal) < Math.abs(best.x - xVal) ? p : best, s.points[0]);
+      if (pt) {
+        focusDots[i].attr("cx", x(pt.x)).attr("cy", y(pt.y)).style("opacity", 1);
+        rows.push(`<span style='color:${s.color}'>■</span> ${s.name}: <b>${pt.y.toFixed(4)}</b>`);
+      }
+    });
+    hoverLine.attr("x1", x(nearest)).attr("x2", x(nearest)).style("opacity", 0.7);
+    const [pageX, pageY] = d3.pointer(event, root);
+    tooltip.html(`epoch <b>${nearest}</b><br>${rows.join("<br>")}`)
+      .style("left", (pageX + 14) + "px").style("top", (pageY - 10) + "px")
+      .style("opacity", 1);
+  }).on("mouseleave", function() {
+    tooltip.style("opacity", 0);
+    hoverLine.style("opacity", 0);
+    focusDots.forEach(d => d.style("opacity", 0));
+  });
+
+  const legend = d3.select(selector).append("div").attr("class", "legend");
+  series.forEach((s, i) => {
+    const item = legend.append("div").attr("class", "item");
+    item.append("span").attr("class", "swatch").style("background", s.color);
+    item.append("span").text(s.name);
+    item.on("click", () => {
+      item.classed("off", !item.classed("off"));
+      seriesG.select(`g[data-series='${s.name}']`).style("display",
+        item.classed("off") ? "none" : null);
+      focusDots[i].style("visibility", item.classed("off") ? "hidden" : null);
+    });
+  });
+}
+
+function barChartPaperVsOurs(selector, data) {
+  const d3 = window.d3;
+  const root = document.querySelector(selector);
+  if (!root) return;
+  const metrics = ["Se","Sp","F1","Acc","AUC"];
+  const groups = [{label:"paper", values:data.paperDrive, color:"#ff8066"}];
+  if (data.bestSingle) groups.push({label:"ours (best single)", values:data.bestSingle, color:"#76b5ff"});
+  if (data.ensembleDrive) groups.push({label:"ours (ensemble+TTA)", values:data.ensembleDrive, color:"#7dd38a"});
+
+  const width = root.clientWidth - 24, height = 320;
+  const margin = {top: 18, right: 18, bottom: 36, left: 48};
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+
+  const svg = d3.select(selector).append("svg")
+    .attr("viewBox", `0 0 ${width} ${height}`);
+  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+  const x0 = d3.scaleBand().domain(metrics).range([0, innerW]).padding(0.2);
+  const x1 = d3.scaleBand().domain(groups.map(g => g.label))
+    .range([0, x0.bandwidth()]).padding(0.08);
+  const y = d3.scaleLinear().domain([0.55, 1.0]).range([innerH, 0]);
+
+  g.selectAll(".gridline-h").data(y.ticks(5)).enter()
+    .append("line").attr("class", "gridline")
+    .attr("x1", 0).attr("x2", innerW).attr("y1", d => y(d)).attr("y2", d => y(d));
+  g.append("g").attr("class", "axis")
+    .attr("transform", `translate(0,${innerH})`).call(d3.axisBottom(x0));
+  g.append("g").attr("class", "axis").call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".2f")));
+
+  const tooltip = d3.select(root).append("div").attr("class", "tooltip");
+  metrics.forEach(m => {
+    const cell = g.append("g").attr("transform", `translate(${x0(m)},0)`);
+    groups.forEach(grp => {
+      const v = grp.values ? grp.values[m] : null;
+      if (v == null) return;
+      cell.append("rect")
+        .attr("x", x1(grp.label)).attr("y", y(v))
+        .attr("width", x1.bandwidth()).attr("height", innerH - y(v))
+        .attr("fill", grp.color).attr("rx", 2)
+        .on("mousemove", (ev) => {
+          const [px, py] = d3.pointer(ev, root);
+          tooltip.html(`${grp.label}<br><b>${m}</b>: ${v.toFixed(4)}`)
+            .style("left", (px + 12) + "px").style("top", (py - 10) + "px")
+            .style("opacity", 1);
+        })
+        .on("mouseleave", () => tooltip.style("opacity", 0));
+      cell.append("text").attr("x", x1(grp.label) + x1.bandwidth()/2)
+        .attr("y", y(v) - 3).attr("text-anchor", "middle")
+        .attr("fill", "#d7dde6").attr("font-size", 9).text(v.toFixed(3));
+    });
+  });
+
+  const legend = d3.select(selector).append("div").attr("class", "legend");
+  groups.forEach(grp => {
+    const item = legend.append("div").attr("class", "item");
+    item.append("span").attr("class", "swatch").style("background", grp.color);
+    item.append("span").text(grp.label);
+  });
+}
+
+function radarChart(selector, data) {
+  const d3 = window.d3;
+  const root = document.querySelector(selector);
+  if (!root) return;
+  const metrics = ["Se","Sp","F1","Acc","AUC"];
+  const groups = [{label:"paper", values:data.paperDrive, color:"#ff8066"}];
+  if (data.bestSingle) groups.push({label:"ours (best single)", values:data.bestSingle, color:"#76b5ff"});
+  if (data.ensembleDrive) groups.push({label:"ours (ensemble+TTA)", values:data.ensembleDrive, color:"#7dd38a"});
+
+  const size = Math.min(root.clientWidth - 24, 360);
+  const R = size / 2 - 30;
+  const svg = d3.select(selector).append("svg")
+    .attr("viewBox", `0 0 ${size} ${size}`).attr("width", "100%");
+  const g = svg.append("g").attr("transform", `translate(${size/2},${size/2})`);
+
+  const rScale = d3.scaleLinear().domain([0.55, 1.0]).range([0, R]);
+  [0.7, 0.8, 0.9, 1.0].forEach(v => {
+    g.append("circle").attr("r", rScale(v))
+      .attr("fill", "none").attr("class", "gridline");
+    g.append("text").attr("x", 4).attr("y", -rScale(v) + 2)
+      .attr("fill", "#4a5568").attr("font-size", 9).text(v.toFixed(2));
+  });
+  metrics.forEach((m, i) => {
+    const ang = (Math.PI * 2 * i) / metrics.length - Math.PI / 2;
+    const lx = Math.cos(ang) * R;
+    const ly = Math.sin(ang) * R;
+    g.append("line").attr("x1", 0).attr("y1", 0).attr("x2", lx).attr("y2", ly)
+      .attr("class", "gridline");
+    const labelR = R + 14;
+    g.append("text")
+      .attr("x", Math.cos(ang) * labelR).attr("y", Math.sin(ang) * labelR)
+      .attr("fill", "#d7dde6").attr("font-size", 11)
+      .attr("text-anchor", "middle").attr("dominant-baseline", "middle")
+      .text(m);
+  });
+  groups.forEach(grp => {
+    if (!grp.values) return;
+    const pts = metrics.map((m, i) => {
+      const ang = (Math.PI * 2 * i) / metrics.length - Math.PI / 2;
+      const r = rScale(grp.values[m] ?? 0.55);
+      return [Math.cos(ang) * r, Math.sin(ang) * r];
+    });
+    const polyline = pts.concat([pts[0]]).map(p => p.join(",")).join(" ");
+    g.append("polygon").attr("points", polyline)
+      .attr("fill", grp.color).attr("fill-opacity", 0.12)
+      .attr("stroke", grp.color).attr("stroke-width", 2);
+    pts.forEach(p => g.append("circle").attr("cx", p[0]).attr("cy", p[1])
+      .attr("r", 3).attr("fill", grp.color));
+  });
+  const legend = d3.select(selector).append("div").attr("class", "legend");
+  groups.forEach(grp => {
+    const item = legend.append("div").attr("class", "item");
+    item.append("span").attr("class", "swatch").style("background", grp.color);
+    item.append("span").text(grp.label);
+  });
+}
+
+function oodBars(selector, data) {
+  const d3 = window.d3;
+  const root = document.querySelector(selector);
+  if (!root) return;
+  const cols = [
+    {ds:"STARE", metric:"F1", paper:data.paperStare.F1, ours:data.ensembleStare ? data.ensembleStare.F1 : null},
+    {ds:"STARE", metric:"AUC", paper:data.paperStare.AUC, ours:data.ensembleStare ? data.ensembleStare.AUC : null},
+    {ds:"STARE", metric:"Acc", paper:data.paperStare.Acc, ours:data.ensembleStare ? data.ensembleStare.Acc : null},
+    {ds:"CHASE", metric:"F1", paper:data.paperChase.F1, ours:data.ensembleChase ? data.ensembleChase.F1 : null},
+    {ds:"CHASE", metric:"AUC", paper:data.paperChase.AUC, ours:data.ensembleChase ? data.ensembleChase.AUC : null},
+    {ds:"CHASE", metric:"Acc", paper:data.paperChase.Acc, ours:data.ensembleChase ? data.ensembleChase.Acc : null},
+  ];
+  const width = root.clientWidth - 24, height = 320;
+  const margin = {top: 18, right: 18, bottom: 48, left: 48};
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+  const svg = d3.select(selector).append("svg").attr("viewBox", `0 0 ${width} ${height}`);
+  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+  const x0 = d3.scaleBand().domain(cols.map(c => `${c.ds}|${c.metric}`)).range([0, innerW]).padding(0.25);
+  const x1 = d3.scaleBand().domain(["paper","ours"]).range([0, x0.bandwidth()]).padding(0.08);
+  const y = d3.scaleLinear().domain([0.55, 1.0]).range([innerH, 0]);
+  g.selectAll(".gridline-h").data(y.ticks(5)).enter()
+    .append("line").attr("class", "gridline")
+    .attr("x1", 0).attr("x2", innerW).attr("y1", d => y(d)).attr("y2", d => y(d));
+  g.append("g").attr("class", "axis").attr("transform", `translate(0,${innerH})`)
+    .call(d3.axisBottom(x0).tickFormat(d => d.replace("|", "\n")));
+  g.append("g").attr("class", "axis").call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".2f")));
+  const tooltip = d3.select(root).append("div").attr("class", "tooltip");
+  cols.forEach(c => {
+    const key = `${c.ds}|${c.metric}`;
+    const cell = g.append("g").attr("transform", `translate(${x0(key)},0)`);
+    [
+      {label:"paper", v:c.paper, color:"#ff8066"},
+      {label:"ours", v:c.ours, color:"#7dd38a"},
+    ].forEach(grp => {
+      if (grp.v == null) return;
+      cell.append("rect")
+        .attr("x", x1(grp.label)).attr("y", y(grp.v))
+        .attr("width", x1.bandwidth()).attr("height", innerH - y(grp.v))
+        .attr("fill", grp.color).attr("rx", 2)
+        .on("mousemove", (ev) => {
+          const [px, py] = d3.pointer(ev, root);
+          tooltip.html(`${c.ds} · <b>${c.metric}</b><br>${grp.label}: ${grp.v.toFixed(4)}`)
+            .style("left", (px + 12) + "px").style("top", (py - 10) + "px")
+            .style("opacity", 1);
+        })
+        .on("mouseleave", () => tooltip.style("opacity", 0));
+    });
+  });
+  const legend = d3.select(selector).append("div").attr("class", "legend");
+  [{label:"paper", color:"#ff8066"}, {label:"ours (ensemble)", color:"#7dd38a"}].forEach(grp => {
+    const item = legend.append("div").attr("class", "item");
+    item.append("span").attr("class", "swatch").style("background", grp.color);
+    item.append("span").text(grp.label);
+  });
+}
+
+function mountAll(data) {
+  lineChart("#chart-auc", data, {
+    metric: "AUC", yLabel: "val AUC", paperRef: data.paperDrive.AUC,
+  });
+  lineChart("#chart-f1", data, {
+    metric: "F1", yLabel: "val F1", paperRef: data.paperDrive.F1,
+  });
+  lineChart("#chart-loss", data, {
+    metric: "train_loss", yLabel: "train loss",
+  });
+  barChartPaperVsOurs("#chart-bars", data);
+  radarChart("#chart-radar", data);
+  oodBars("#chart-ood", data);
+}
+
+waitForD3(() => mountAll(window.__RSF_DATA__));
+
+</script>
+</main></body></html>
